@@ -1,0 +1,4 @@
+#!/bin/sh
+#screenshot upload 
+maim -s -u -l -c 0.3,0,0.5,0.3 | curl -F "file=@-
+" 0x0.st | xclip -selection clipboard

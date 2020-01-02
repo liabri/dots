@@ -1,0 +1,2 @@
+#!/bin/bash
+feh -Z -. --start-at "$1" "$(dirname "$1")" &

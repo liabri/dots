@@ -1,0 +1,2 @@
+#!/bin/bash
+[ "$(pgrep 'cmus')" ] && wmctrl -a "cmus" || { bspc desktop -f 5; st -c cmus cmus; wmctrl -a "cmus"; }

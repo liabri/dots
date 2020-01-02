@@ -1,0 +1,122 @@
+#!/bin/sh
+
+notify() {
+	gdbus call -e -d "org.freedesktop.Notifications" \
+		-o /org/freedesktop/Notifications \
+		-m org.freedesktop.Notifications.Notify "" \
+		$1 "" "$2" "$3" "[]" "{}" 2000 >/dev/null
+}
+
+mute() {
+	# if a command isn't specified toggle mute
+	if [ -z "$1" ]; then
+		[ "$(amixer get Master | grep -io "\[on\|\[off" | head -1)" = "[on" ] &&
+			action="mute" || action="unmute"
+	else
+		action="$1"
+	fi
+
+	# un/mute
+	amixer set Master "${action}" >/dev/null
+	notif="Volume ${action}d"
+}
+
+mute_window() {
+	# sorry this is so messy lol
+	pulsemixer --id "$(pulsemixer --list-sinks | \
+		grep -i $(ps -p $(xdotool getactivewindow getwindowpid) -o comm=) | \
+		grep -io 'sink-input-[0-9]*' | tail -1)" --toggle-mute
+}
+
+volume() {
+	# get the current volume
+	current="$(amixer get Master | grep -io "[0-9][0-9]*%" | \
+		head -1 | tr -d '%')"
+
+	# if $2 isn't provided set it to 5 (Default up/down percent)
+	[ -n "$2" ] &&
+		number="$2" ||
+		{ [ "$1" != set ] && number="5"; }
+
+	# get the new volume to set by adding/subtracting the chosen
+	# number from the current volume
+	if [ "$1" = up ]; then
+		number="$((current + number))"
+	elif [ "$1" = down ]; then
+		number="$((current - number))"
+	fi
+
+	# set the volume to the new value
+	amixer set Master "$number%" >/dev/null
+
+	notif="Volume set to $number%"
+}
+
+media() {
+	# i have a script to choose a playerctl player,
+	# this enables that to be used in this script.
+	[ -f /tmp/player ] || touch /tmp/player
+	. /tmp/player
+
+	action="$1"
+
+	# if $1 is p, toggle play/pause
+	if [ "$1" = p ]; then
+		status="$(playerctl -p "$player" status)"
+		{ [ "$status" = Stopped ] || [ "$status" = Paused ]; } &&
+			{ action="play"; action1="Resumed"; } ||
+			{ action="pause"; action1="Paused"; }
+	fi
+
+	# apply function to player
+	playerctl -p "$player" "$action"
+	notif="$action1 $(playerctl -p "$player" metadata xesam:title)"
+}
+
+mediavolume() {
+	[ -f /tmp/player ] || touch /tmp/player
+	. /tmp/player
+
+	action="$1"
+	value="$2"
+
+	# determine polarity based on input
+	if [ "$1" = mup ]; then
+		polarity="+"
+	elif [ "$1" = mdown ]; then
+		polarity="-"
+	fi
+
+	# if second argument isnt supplied, default to 5%
+	if [ -z "$2" ]; then
+		value=0.05
+	fi
+
+	# apply new value to player
+	playerctl -p "$player" volume "$value$polarity"
+
+	# configure notification
+	vol="$(playerctl -p "$player" volume)"
+	volp="$(echo "$vol*100" | bc)"
+	notif="Cmus volume set to ${volp%.*}%"
+}
+
+case $1 in
+	# mute
+	m) mute;;
+	mute|unmute) mute $1;;
+
+	# mute current window
+	mw) mute_window;;
+
+	# volume
+	set|up|down) volume $1 $2;;
+
+	# media
+	p|pause|play|stop) media $1;;
+
+	# media volume
+	mup|mdown) mediavolume $1 $2;;
+esac
+
+notify 69 "$notif"

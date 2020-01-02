@@ -1,0 +1,18 @@
+#!/usr/bin/env bash
+#
+# hex -> rgb
+
+hex=${*:-`< /dev/stdin`}
+hex=${hex#\#} # strip '#'
+
+for ((; i < ${#hex}; i += 2)) {
+    out+=($((16#${hex:i:2})))
+} \
+    2> /dev/null
+
+((${#hex} != 6 || ${#out[@]} != 3)) && {
+    echo "usage : ${0##*/} [hex]" >&2
+    exit 1
+}
+
+echo "${out[*]}"

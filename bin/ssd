@@ -1,0 +1,3 @@
+#!/bin/sh
+#screenshot download 
+maim -s -u -l -c 0.3,0,0.5,0.3 ~/var/pictures/$(date +%s).png

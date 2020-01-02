@@ -1,0 +1,7 @@
+#!/bin/sh
+
+cd /
+echo -en '\033]4;256;rgb:00/00/00\033\\'
+echo -en '\033]4;257;rgb:00/ff/00\033\\'
+tree -aln -I 'home'
+mh

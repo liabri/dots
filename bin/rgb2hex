@@ -1,0 +1,14 @@
+#!/usr/bin/env bash
+#
+# rgb -> hex
+
+for c in ${*:-`< /dev/stdin`}; {
+    printf -v out '%s%02X' "$out" "$c"
+}
+
+((${#out} != 6)) && {
+    echo "usage : ${0##*/} [red] [green] [blue]" >&2
+    exit 1
+}
+
+echo "#$out"
