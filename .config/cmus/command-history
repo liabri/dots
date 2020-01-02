@@ -1,0 +1,52 @@
+wq
+save
+bind common ^K pl-create
+bind common ^M pl-rename
+clear
+colorscheme sage
+colorscheme night
+colorscheme nerdz
+colorscheme zenburn
+colorscheme xterm-white
+colorscheme solarized-light
+colorscheme solarized-dark
+colorscheme jellybeans
+colorscheme gruvbox-alt
+colorscheme gruvbox
+colorscheme green-mono-88
+colorscheme dracula
+colorscheme gray-88
+colorscheme default
+colorscheme nerdz.theme
+color
+q
+bind -f browser i toggle show_hiddenz
+bind -f common e player-next
+bind -f common z player-prev
+bind -f common q player-prev
+set continue=true
+set continue=falsetrue
+set resume=false
+set resume=true
+filter 
+bind common X clear -q
+bind common A win-add-l
+bind -f common A win-add-1
+bind common A add
+bind common X clear
+bind common E clear
+bind -f common F push filter w
+filter "potato
+bind common <key> clear
+filter f
+bind -f common d seek +5
+bind -f common  seek +5
+bind -f common a seek -5
+bind -f common a win-add-l
+bind -f common t win-activate
+bind -f common t toggle show_remaining_time
+filter "billy"
+filter billy
+bind -f common w win-up
+bind -f common s win-down
+bind -f common w win-down

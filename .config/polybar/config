@@ -1,0 +1,103 @@
+[colors]
+accent									= #fa0046
+
+alert									= ${colors.accent}
+
+selected								= #212126
+selected-alt							= #262631
+
+background								= #161621
+background-alt							= #212126
+foreground								= #dddddd
+foreground-alt							= #aaaaaa
+
+[bar/top]
+monitor 								= ${env:MONITOR:}
+fixed-center							= true
+override-redirect 						= true
+wm-restack 								= bspwm
+
+width									= 100%
+height									= 40
+padding 								= 5
+
+module-margin-left 						= 1
+module-margin-right                     = 1
+
+border-size								= 0
+
+font-0									= fira mono:pixelsize=9;1
+background								= #00000000
+foreground								= ${colors.foreground}
+
+modules-left							= time
+modules-center							= 
+modules-right							= cpu temp mem vol
+
+[module/time]
+type									= internal/date
+interval								= 5
+label									= "%time%"
+time									= "%H:%M | %d/%m/%y"
+;format-prefix							= "time "
+format-prefix-foreground				= ${colors.foreground-alt}
+
+[module/mem]
+type									= internal/memory
+interval								= 2
+format-prefix							= "mem "
+format-prefix-foreground				= ${colors.foreground-alt}
+label									= %percentage_used%%
+
+[module/cpu]
+type									= internal/cpu
+interval								= 2
+format-prefix 							= "cpu "
+format-prefix-foreground				= ${colors.foreground-alt}
+label									= %percentage:%%
+
+[module/vol]
+type									= internal/pulseaudio
+format-volume							= <label-volume>
+
+format-volume-prefix					= "vol "
+format-volume-prefix-foreground			= ${colors.foreground-alt}
+
+label-volume							= %percentage%%
+label-volume-foreground					= ${root.foreground}
+
+label-muted								= muted
+label-muted-foreground					= ${colors.foreground-alt}
+
+[module/temp]
+type									= internal/temperature
+thermal-zone							= 0
+warn-temperature						= 60
+
+format									= <label>
+format-underline						=
+format-warn								= <label-warn>
+format-warn-background					= ${colors.alert}
+
+label									= %temperature-c%
+label-warn								= %temperature-c%
+label-warn-padding						= 1
+label-warn-foreground					= ${colors.foreground}
+
+;[module/bat]
+;type									= internal/battery
+;battery									= BAT0
+;adapter									= AC
+;full-at									= 90
+
+;format-full-prefix						= "battery "
+;format-full-prefix-foreground			= ${colors.foreground-alt}
+;format-full								= <label-full>
+
+;format-charging-prefix					= "+battery "
+;format-charging-prefix-foreground		= ${colors.foreground-alt}
+;format-charging							= <label-charging>
+
+;format-discharging-prefix				= "-battery "
+;format-discharging-prefix-foreground	= ${colors.foreground-alt}
+;format-discharging						= <label-discharging>

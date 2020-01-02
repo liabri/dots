@@ -1,0 +1,165 @@
+# open system monitor
+super + grave
+	gnome-system-monitor
+
+# open neovim
+super + z
+	st -e nvim
+
+# open sublime
+super + o
+	subl3
+
+#open firefox
+super + f
+	firefox
+
+# open thunar
+super + v
+	thunar
+
+# open/focus on cmus
+super + m
+	sumc
+
+# open lyrics
+super + n
+	st -e clyrics -c
+
+# random wallpaper
+super + p
+	hefrandom
+
+# restart sxhkd
+super + i
+	pkill -SIGUSR1 sxhkd
+
+# terminal
+super + t
+	st
+
+# lock screen
+super + l
+	gllock
+
+# toggle rofi (app launcher)
+super + c
+	rofi -show drun
+
+# show windows 
+super + x
+	rofi -show window	
+
+# toggle on/off polybar showing
+super + b
+	rabyloptoggle
+
+# wifi menu
+super + g 
+	rofi_wifi
+
+# toggle on/off cmus playback
+super + backslash
+	vol p
+
+# increase cmus volume
+super + bracketright
+	vol mup 0.05
+
+# decrease cmus volume
+super + bracketleft 	
+	vol mdown 0.05
+
+# decrease system volume
+super + minus 			
+	vol down
+
+# increase system volume
+super + equal	
+	vol up
+
+# mute system
+super + BackSpace
+	vol m
+
+# change keyboard language
+super + {comma,period,slash,Shift_R}
+	setxkbmap -layout { ,it,fr,mt} us		
+
+# take a screenshot of a selection
+shift + Print
+	ssd
+
+# take a screenshot of a selection, upload to 0x0.st and copy url to clipboard
+Print
+	ssu
+
+# start/stop a gif recording of a selection
+ctrl + shift + Print
+  { giph -s -l -c 0.3\,0\,0.5\,0.3 ~/Videos/$(date +%s).gif, killall -INT -g giph }
+
+# start/stop a gif recording of a selection, upload to 0x0.st and copy url to clipboard
+ctrl + Print
+  { giph -s -l -c 0.3\,0\,0.5\,0.3 | (trap '' INT; curl -F "file=@-" 0x0.st | xclip -selection clipboard), killall -INT -g giph }
+
+# =====
+# bspwm
+# =====
+
+# kill application
+alt + q
+	bspc node -k
+
+# close application
+super + q
+	bspc node -c
+
+# swap between monocle and tiled
+super + r
+	bspc desktop -l {tiled,monocle}
+
+# restart bspwm
+super + shift + Escape
+	bspwm_restart
+
+# focus on the node in the given direction
+super + {a, s, w, d}
+	bspc node -f {west,south,north,east}
+
+# focus on the node in the given direction
+super + {Left, Down, Up, Right}
+	bspc node -f {west,south,north,east}
+
+# swap nodes in any given direction or MOVE to a blank monitor
+alt + {a, s, w, d}
+    d={west,south,north,east}; bspc node -s $d --follow || bspc node -m $d --follow; cursor
+
+# swap nodes in any given direction or MOVE to a blank monitor
+alt + {Left, Down, Up, Right}
+    d={west,south,north,east}; bspc node -s $d --follow || bspc node -m $d --follow; cursor
+
+# moves nodes to another monitor
+alt + shift + {a, s, w, d}
+    bspc node -m {west,south,north,east} --follow        
+
+# moves nodes to another monitor
+alt + shift + {Left, Down, Up, Right}
+    bspc node -m {west,south,north,east} --follow      
+
+# select virtual desktop
+super + {1,2,3,4,5,6,7,8,9,0}
+	bspc desktop -f {1,2,3,4,5,6,7,8,9,10}
+
+# move application to specified virtual desktop
+super + shift + {1,2,3,4,5,6,7,8,9,0}
+	bspc node -d {1,2,3,4,5,6,7,8,9,10} --follow
+
+# resize size of window
+super + alt + {Left, Down, Up, Right}
+    bspwm_resize {west,south,north,east}	
+
+alt + Tab
+	bspc node -f next;
+
+alt + shift + Tab
+	bspc node -f prev;

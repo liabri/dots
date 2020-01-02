@@ -1,0 +1,62 @@
+[global]
+    corner_radius = 0
+    NotShowIn=KDE;Cinnamon;deepin
+    monitor = 0
+    follow = none
+    geometry = "500x5-40-40"
+    indicate_hidden = yes
+    shrink = yes
+    transparency = 0
+    notification_height = 0
+    separator_height = 0
+    padding = 25
+    horizontal_padding = 25
+    frame_width = 0
+    frame_color = "#daddee"
+    separator_color = frame
+    sort = yes
+    idle_threshold = 120
+    font = Fira Mono Bold 12px
+    line_height = 0
+    markup = full
+    format = "%s\n%b"
+    alignment = center
+    show_age_threshold = 60
+    word_wrap = yes
+    ellipsize = middle
+    ignore_newline = no
+    stack_duplicates = true
+    hide_duplicate_count = false
+    show_indicators = no
+    icon_position = left
+    max_icon_size = 32
+    icon_path = ""
+    sticky_history = yes
+    history_length = 20
+    dmenu = /usr/bin/dmenu -p dunst:
+    browser = /usr/bin/firefox -new-tab
+    always_run_script = true
+    title = Dunst
+    class = Dunst
+    startup_notification = false
+    force_xinerama = false
+[experimental]
+    per_monitor_dpi = true
+[shortcuts]
+    #close = ctrl+space
+    #close_all = ctrl+shift+space
+    history = ctrl+shift+grave
+    context = ctrl+shift+period
+[urgency_low]
+    background = "#daddee"
+    foreground = "#141417"
+    timeout = 5
+    #icon = /path/to/icon
+[urgency_normal]
+    background = "#202026"
+    foreground = "#daddee"
+    timeout = 5
+[urgency_critical]
+    background = "#e56f92"
+    foreground = "#141417"
+    timeout = 0
