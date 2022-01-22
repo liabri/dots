@@ -1,0 +1,22 @@
+#!/bin/sh
+# # ar - file archiver
+# # usage: arc [options] <name> <file·s> 
+# # options: t 			specify archiving format 	[default: tar] 
+
+# make sure all arguments are present
+if [ $# -ge 2 ]; then
+	# is directory
+	if [ -d "$2" ]; then
+		case $TYPE in
+	    	*)		tar -cvf $1 $2;;
+	  	esac
+	# is files
+	else
+		case $TYPE in
+	    	*)		tar -cvf $1 "${@:2}";;
+	  	esac
+	fi 
+else
+	echo "Not all arguments supplied"
+    echo "usage: ar [options] <name> <file·s>"
+fi
