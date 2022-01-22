@@ -1,5 +1,5 @@
-# dotfiles
-A collection of dotfiles (configuration files) for my setup.
+# dots
+A collection of my dotfiles & scripts
 
 ## preview 
 ![](preview/3.png)
