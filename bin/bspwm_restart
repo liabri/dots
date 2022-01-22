@@ -1,5 +1,0 @@
-#!/bin/sh
-
-pkill polybar
-pkill sxhkd
-bspc wm -r
