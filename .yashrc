@@ -1,0 +1,67 @@
+[ -r ~/.profile ] && . ~/.profile
+[ -r ~/.cargo/env ] && . ~/.cargo/env
+
+# colours
+alias grep="grep --color=auto"
+alias ls="ls --color=auto"
+
+# aliases
+alias cp="cp -i"						# confirm before overwriting something
+alias rm="rm -i"						# confirm before deleting something
+alias df="df -h"						# human-readable sizes
+alias free="free -m"					# show sizes in MB
+
+# git 
+alias ga="git add"
+alias gp="git push"
+alias gs="git status"
+alias gc="git commit"
+alias gaa="git add -A"
+alias gpf="git push -f"
+alias gcm="git commit -m"
+alias gca="git commit --amend"
+alias gl="git log --all --decorate --oneline --graph"
+
+# package manager
+alias insy="yay -S"
+alias ins="sudo pacman -S" 				# install package
+alias rem="sudo pacman -Rs" 			# remove package
+alias upd="sudo pacman -Syu"			# update packages 
+alias updm="sudo pacman -Syy"			# update mirrors
+alias src="pacman -Q | grep $1"			# list packages
+
+export PS1=\
+'\fm.${LOGNAME} '\
+'\fw.${{{PWD:/~/\~}##*/}:-$PWD}'\
+"\fm.${SSH_CONNECTION:+@${HOSTNAME}}"\
+"\fm \$\fd "
+
+# yash
+
+HISTFILE=${XDG_CACHE_HOME}/yash_history HISTSIZE=5000
+
+# normally yash is more POSIX-compliant than /bin/sh :-)
+sh() { yash --posix "$@"; }
+yash() { command yash "$@"; }
+# USE DASH ABOVE ?
+
+
+if [ "$TERM" = "linux" ]; then
+    echo -en "\e]P0000000" #black
+    echo -en "\e]P8918f8f" #darkgrey
+    echo -en "\e]P1e56f92" #darkred
+    echo -en "\e]P9e56f92" #red
+    echo -en "\e]P28cd7aa" #darkgreen
+    echo -en "\e]PA8cd7aa" #green
+    echo -en "\e]P3D7AF87" #brown
+    echo -en "\e]PBe9967e" #yellow
+    echo -en "\e]P479aaeb" #darkblue
+    echo -en "\e]PC79aaeb" #blue
+    echo -en "\e]P5c488ec" #darkmagenta
+    echo -en "\e]PDc488ec" #magenta
+    echo -en "\e]P67abce4" #darkcyan
+    echo -en "\e]PE7abce4" #cyan
+    echo -en "\e]P7daddee" #lightgrey
+    echo -en "\e]PFdaddee" #white
+    clear #for background artifacting
+fi
