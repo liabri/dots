@@ -1,11 +1,18 @@
-export EDITOR=nvim
-export PATH="$(find ~/bin/ -maxdepth 1 -type d | sed 's|/$||'| tr '\n' ':')$PATH"
-export PS1="\[\033[01;35m\]\u\033[01;37m\] \W\[\033[01;35m\] \$\[\033[00m\] "
-export GTK_THEME=oomox-sage
-export QT_QPA_PLATFORMTHEME=qt5ct
+export PATH="$(find ~/.bin/ -maxdepth 1 -type d | sed 's|/$||'| tr '\n' ':')$PATH"
 
-export XDG_CACHE_HOME="${HOME}/var/cache"
-export XDG_DESKTOP_DIR='/non/existent'
-export XDG_DOWNLOAD_DIR="${HOME}/var/downloads"
-export MAIL="${HOME}/var/mail/inbox"
+export XDG_DESKTOP_DIR="$HOME/.local/share"
+export XDG_DOCUMENTS_DIR="$HOME/dokumenti"
+export XDG_DOWNLOAD_DIR="$HOME/minzel"
+export XDG_MUSIC_DIR="$HOME/muzika"
+export XDG_PICTURES_DIR="$HOME/ritratti"
+export XDG_SCREENSHOTS_DIR="$XDG_PICTURES_DIR/screenshots"
+export XDG_PUBLICSHARE_DIR="$HOME/publika"
+export XDG_TEMPLATES_DIR="$HOME/.config/mudelli.tal-filzi"
+export XDG_VIDEOS_DIR="$HOME/videos"
+export XDG_CONFIG_HOME="$HOME/.config"
+export XDG_CACHE_HOME="$HOME/.cache"
+export XDG_DATA_HOME="$HOME/.local/share"
+export XDG_STATE_HOME="$HOME/.local/state"
 
+# temporary for wayland
+export MOZ_ENABLE_WAYLAND=1
