@@ -1,0 +1,20 @@
+#!/bin/sh
+
+first=$1
+second=$2
+third=$3
+
+font_char() {
+	echo $(fc-list :charset=$third)
+}
+
+font() {
+	case $second in
+		char) font_char;;
+	esac
+}
+
+case $first in
+	font) font;;
+esac
+
