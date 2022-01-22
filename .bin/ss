@@ -1,0 +1,88 @@
+#!/bin/sh
+
+notify() {
+    gdbus call -e -d "org.freedesktop.Notifications" \
+        -o /org/freedesktop/Notifications \
+        -m org.freedesktop.Notifications.Notify "" \
+        $1 "" "$2" "$3" "[]" "{}" 2000 >/dev/null
+}
+
+die() {
+    MSG=${1:-Bye}
+    notify 69 "Error: $MSG"
+    exit 2
+}
+
+getTargetDirectory() {
+    echo ${XDG_SCREENSHOTS_DIR:-${XDG_PICTURES_DIR:-$HOME}}
+}
+
+if [ "$1" = "--notify" ]; then
+    NOTIFY=yes
+    shift 1
+else
+    NOTIFY=no
+fi
+
+help() {
+    echo "Usage:"
+    echo "  ss [--notify]"
+    echo "  ss check"
+    echo "  ss usage"
+    echo ""
+    echo "  check: Verify if required tools are installed and exit."
+    echo "  usage: Show this message and exit."
+}
+
+check() {
+    echo "Checking if required tools are installed. If something is missing, install it to your system and make it available in PATH..."
+    check_command grim
+    check_command slurp
+    check_command wl-copy
+    check_command notify-send
+}
+
+check_command() {
+    COMMAND=$1
+    if command -v "$COMMAND" > /dev/null 2>&1; then
+        RESULT="OK"
+    else
+        RESULT="NOT FOUND"
+    fi
+    echo "   $COMMAND: $RESULT"
+}
+
+use_grim() {
+    FILE=$1
+    GEOM=$2
+    if [ -z "$GEOM" ]; then
+        grim - | tee "$FILE" || die "Unable to invoke grim"
+    else
+        grim -g "$GEOM" - | tee "$FILE" || die "Unable to invoke grim"
+    fi
+}
+
+use_slurp() {
+    GEOM=$(slurp -d)
+    if [ -z "$GEOM" ]; then # Check if user exited slurp without selecting the area
+        exit 1
+    fi
+
+    echo "$GEOM"
+}
+
+init_ss() {
+    FILE="$(getTargetDirectory)/$(date +%s).png"
+    use_grim "$FILE" "$(use_slurp)" | wl-copy --type image/png || die "Clipboard error"
+    TITLE="Screenshot taken"
+    MESSAGE="${FILE//"$HOME"/"~"}"
+    notify 69 "$TITLE" "$MESSAGE"
+}
+
+case $1 in
+    help)          help;;
+    check)        check;;
+    *)          init_ss;;
+esac
+
+exit
