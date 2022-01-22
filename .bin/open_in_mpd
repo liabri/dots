@@ -1,0 +1,10 @@
+#!/bin/sh
+
+# If not in library, temporarily put it there to play
+play_from_temp() {
+    cp -s "$PWD/$1" "$XDG_MUSIC_DIR/library/temp"
+    mpc update "library/temp/"
+    mpc insert "library/temp/$1" && mpc next || exit
+}
+
+mpc insert "${PWD#*library/}/$1" && mpc next || play_from_temp $1
