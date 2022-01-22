@@ -1,0 +1,89 @@
+* {
+    border: none;
+    border-radius: 0;
+    font-family: Fira Mono;
+    font-size: 14px;
+    min-height: 0;
+}
+
+window#waybar {
+    background: transparent;
+}
+
+window#waybar.hidden {
+    opacity: 0;
+}
+
+#clock,
+#battery,
+#cpu,
+#memory,
+#disk,
+#temperature,
+#backlight,
+#network,
+#pulseaudio,
+#custom-media,
+#tray,
+#mode,
+#idle_inhibitor,
+#mpd {
+    transition: none;
+    margin: 0 6px;
+    padding: 5px 10px;
+    margin-top: 10px;
+    background-color: rgba(40, 45, 45, 0.4);
+    border-radius: 26px;
+    color: #e4e5d7;
+}
+
+#battery.charging, #battery.plugged {
+    background-color: rgba(38, 166, 91, 0.7);
+}
+
+#battery.critical:not(.charging) {
+    background-color: #f53c3c;
+    animation-name: blink;
+    animation-duration: 0.5s;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+    animation-direction: alternate;
+}
+
+#network.disconnected {
+    background-color: rgba(235, 77, 75, 0.7);
+}
+
+#temperature.critical {
+    background-color: rgba(235, 77, 75, 0.7);
+}
+
+#mpd.stopped,
+#mpd.disconnected {
+    opacity: 0;
+}
+
+/*
+#language {
+    background: #00b093;
+    color: #740864;
+    padding: 0 5px;
+    margin: 0 5px;
+    min-width: 16px;
+}
+
+#keyboard-state {
+    background: #97e1ad;
+    color: #000000;
+    padding: 0 0px;
+    margin: 0 5px;
+    min-width: 16px;
+}
+
+#keyboard-state > label {
+    padding: 0 5px;
+}
+
+#keyboard-state > label.locked {
+    background: rgba(0, 0, 0, 0.2);
+}*/
