@@ -1,0 +1,27 @@
+---
+methods:
+  - kana
+  - cangjie5
+bindings:
+  - keyCodes: [ 47 ]
+    function: 
+      ChangeMethodTo: kana
+    conditions: 
+      - CurrentMethodIs: cangjie5
+  - keyCodes: [ 47 ]
+    function: 
+      ChangeMethodTo: cangjie5
+    conditions: 
+      - CurrentMethodIs: kana
+  - keyCodes: [ 65 ] 
+    function: 
+      CommitThenChangeMethodTo: kana
+    conditions: 
+      - CurrentMethodIs: cangjie5
+  # - keyCodes: [ 22 ] # doesnt work
+  #   function: 
+  #     ChangeMethodTo: kana
+  #   conditions: 
+  #     - Empty
+  #     - CurrentMethodIsInstanceOf: table
+...

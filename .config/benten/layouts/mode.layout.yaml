@@ -1,0 +1,16 @@
+id: mode
+encoding: UTF-8
+modifiers:
+  - level: 1
+    type: set
+    keyCodes: [ 0 ] 
+  - level: 2
+    type: set
+    keyCodes: [ 62 ] 
+  - level: 3
+    type: set
+    keyCodes: [ 108 ] 
+  - level: 4
+    type: set
+    keyCodes: [ 62, 108 ] 
+...
