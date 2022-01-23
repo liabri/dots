@@ -10,7 +10,7 @@ alias cp="cp -i"						# confirm before overwriting something
 alias rm="rm -i"						# confirm before deleting something
 alias df="df -h"						# human-readable sizes
 alias free="free -m"					# show sizes in MB
-alias feo = fastfetch
+alias feo="fastfetch"
 
 # git 
 alias ga="git add"
