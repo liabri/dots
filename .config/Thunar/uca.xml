@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<actions>
+<action>
+	<icon>utilities-terminal</icon>
+	<name>Open Terminal Here</name>
+	<unique-id>1581682641375192-1</unique-id>
+	<command>foot</command>
+	<description></description>
+	<patterns>*</patterns>
+	<startup-notify/>
+	<directories/>
+	<audio-files/>
+	<image-files/>
+	<other-files/>
+	<text-files/>
+	<video-files/>
+</action>
+<action>
+	<icon></icon>
+	<name>Extract Here </name>
+	<unique-id>1609072041874463-1</unique-id>
+	<command>notify-send &quot;extracting %f&quot;; ex %f</command>
+	<description></description>
+	<patterns>*</patterns>
+	<other-files/>
+</action>
+</actions>
