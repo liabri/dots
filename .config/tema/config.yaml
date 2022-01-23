@@ -1,0 +1,11 @@
+---
+modules:
+  - name: rofi
+    path: $XDG_CONFIG_HOME/rofi/themes/
+    command: ~
+  - name: tapizzerija
+    path: $XDG_PICTURES_DIR/tapizzerija
+    command: swaybg -i $XDG_PICTURES_DIR/tapizzerija/wallpaper.jpg
+commands:
+  on_change: "notify-send ThemeChanged ${current_theme}"
+...
