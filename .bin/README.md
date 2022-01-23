@@ -23,3 +23,5 @@
 **ss:** screenshot script utilising grim and slurp
 
 **vol:** volume script using amixer for global, current-window and mpd
+
+**xlewn:** colour pipette using grim, slurp and imagemagick
