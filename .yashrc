@@ -6,10 +6,10 @@ alias grep="grep --color=auto"
 alias ls="ls --color=auto"
 
 # aliases
-alias cp="cp -i"						# confirm before overwriting something
-alias rm="rm -i"						# confirm before deleting something
-alias df="df -h"						# human-readable sizes
-alias free="free -m"					# show sizes in MB
+alias cp="cp -i"                        # confirm before overwriting something
+alias rm="rm -i"                        # confirm before deleting something
+alias df="df -h"                        # human-readable sizes
+alias free="free -m"                    # show sizes in MB
 alias feo="fastfetch"
 alias doc="zathura --fork"
 
@@ -26,11 +26,11 @@ alias gl="git log --all --decorate --oneline --graph"
 
 # package manager
 alias insy="yay -S"
-alias ins="sudo pacman -S" 				# install package
-alias rem="sudo pacman -Rs" 			# remove package
-alias upd="sudo pacman -Syu"			# update packages 
-alias updm="sudo pacman -Syy"			# update mirrors
-alias src="pacman -Q | grep $1"			# list packages
+alias ins="sudo pacman -S"              					# install package
+alias rem="sudo pacman -Rs"             					# remove package
+alias upd="sudo pacman -Syu; sudo paccache -rk1"            # update packages & clear old cache
+alias updm="sudo pacman -Syy"           					# update mirrors
+alias src="pacman -Q | grep $1"         					# list packages
 
 export PS1=\
 '\fm.${LOGNAME} '\
