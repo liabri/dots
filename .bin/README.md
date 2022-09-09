@@ -8,6 +8,8 @@
 
 **exists:** well, does it exists ? currently supports glyph lookup in fonts
 
+**lwien:** print terminal colours
+
 **mh:** fun lil trinket
 
 **open_in_mpd:** open audio files with mpd by temporarily moving it into music library
