@@ -1,0 +1,127 @@
+[colors]
+accent									= #fa0046
+
+alert									= ${colors.accent}
+
+selected								= #212126
+selected-alt							= #262631
+
+background								= #161621
+background-alt							= #212126
+foreground								= #dddddd
+foreground-alt							= #aaaaaa
+
+[bar/top]
+monitor 								= ${env:MONITOR:}
+fixed-center							= true
+override-redirect 						= true
+wm-restack 								= bspwm
+
+width									= 100%
+height									= 40
+padding 								= 5
+
+module-margin-left 						= 1
+module-margin-right                     = 1
+
+border-size								= 0
+
+font-0									= fira mono:pixelsize=10;1
+font-2 									= Weather Icons:size=12;1
+background								= #00000000
+foreground								= ${colors.foreground}
+
+modules-left							= calendar weather
+modules-center							= player-mpris-tail
+modules-right							= net bluetooth cpu temp mem vol bat
+
+[module/weather]
+type 									= custom/script
+exec 									= ~/.config/polybar/scripts/weather.sh
+interval 								= 600
+label-font 								= 2
+
+[module/bluetooth]
+type 									= custom/script
+exec 									= ~/.config/polybar/scripts/bluetooth.sh
+format-prefix 							= "blu "
+format-prefix-foreground				= ${colors.foreground-alt}
+tail 									= true
+
+[module/net]
+type 									= custom/script
+exec 									= ~/.config/polybar/scripts/net.sh
+format-prefix 							= "net "
+format-prefix-foreground				= ${colors.foreground-alt}
+tail 									= true
+
+[module/player-mpris-tail]
+type 									= custom/script
+exec 									= ~/.config/polybar/scripts/player-mpris-tail.py -f '{icon} {artist} - {title}'
+tail 									= true
+
+[module/calendar]
+type 									= custom/script
+exec 									= ~/.config/polybar/scripts/calendar.sh
+interval 								= 5
+click-left 								= ~/.config/polybar/scripts/calendar.sh --popup &
+
+[module/mem]
+type									= internal/memory
+interval								= 2
+format-prefix							= "mem "
+format-prefix-foreground				= ${colors.foreground-alt}
+label									= %percentage_used%%
+
+[module/cpu]
+type									= internal/cpu
+interval								= 2
+format-prefix 							= "cpu "
+format-prefix-foreground				= ${colors.foreground-alt}
+label									= %percentage:%%
+
+[module/vol]
+type									= internal/pulseaudio
+format-volume							= <label-volume>
+
+format-volume-prefix					= "vol "
+format-volume-prefix-foreground			= ${colors.foreground-alt}
+
+label-volume							= %percentage%%
+label-volume-foreground					= ${root.foreground}
+
+label-muted								= muted
+label-muted-foreground					= ${colors.foreground-alt}
+
+[module/temp]
+type									= internal/temperature
+thermal-zone							= 0
+warn-temperature						= 60
+
+format									= <label>
+format-underline						=
+format-warn								= <label-warn>
+format-warn-background					= ${colors.alert}
+
+label									= %temperature-c%
+label-warn								= %temperature-c%
+label-warn-padding						= 1
+label-warn-foreground					= ${colors.foreground}
+
+[module/bat]
+type									= internal/battery
+battery									= BAT0
+adapter									= AC
+full-at									= 90
+
+format-full-prefix						= "bat "
+format-full-prefix-foreground			= ${colors.foreground-alt}
+format-full								= <label-full>
+
+format-charging-prefix					= "+bat "
+format-charging-prefix-foreground		= ${colors.foreground-alt}
+format-charging							= <label-charging>
+
+format-discharging-prefix				= "-bat "
+format-discharging-prefix-foreground	= ${colors.foreground-alt}
+format-discharging						= <label-discharging>

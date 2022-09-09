@@ -1,0 +1,191 @@
+# paste plain text
+super + Num_Lock
+	hug
+
+# open system monitor
+super + grave
+	killall gnome-system-monitor; gnome-system-monitor &
+
+# open neovim
+super + z
+	rofi_bluetooth
+
+# open rofi_pass
+super + u
+	rofi-pass
+
+# open sublime
+super + o
+	subl3
+
+# open firefox secure profile
+super + f
+	firefox
+
+# open firefox clean profile
+super + g 
+	firefox -P "Clean"
+
+# open thunar
+super + v
+	thunar
+
+# change theme
+super + k
+	theme
+
+# change mac address
+#super + j
+	changemac
+
+# random wallpaper
+super + y
+	hefrandom
+
+# restart sxhkd
+super + i
+	pkill -SIGUSR1 sxhkd
+
+# terminal
+super + t
+	st
+
+# lock screen
+super + l
+	systemctl suspend
+
+# toggle rofi (app launcher)
+super + c
+	rofi -show drun
+
+# calendar
+super + h
+	st -e calcurse
+
+#power options menu
+super + p 
+	rofi_powermode
+
+# wifi menu
+super + x
+	rofi_wifi	
+
+# toggle on/off polybar showing
+super + b
+	rabyloptoggle
+
+# change device to output to for specific window
+super + \
+	vol wd	
+
+# mute current window
+super + backslash
+	vol wm
+
+# increase current window volume
+super + bracketright
+	vol w +5
+
+# increase current window volume
+super + bracketleft
+	vol w -5	
+
+# toggle on/off cmus playback
+alt + backslash
+	vol cp
+
+# increase cmus volume
+alt + bracketright
+	vol c +5
+
+# decrease cmus volume
+alt + bracketleft 	
+	vol c -5
+
+# decrease system volume
+XF86AudioLowerVolume 			
+	vol s -5
+
+# increase system volume
+XF86AudioRaiseVolume	
+	vol s +5
+
+# mute system
+XF86AudioMute
+	vol sm
+
+# change keyboard language
+super + {n,m,comma,period,slash,Shift_R}
+	fcitx5-remote -g {fr,us,ru,kr,jp,benten}
+
+# take a photo with webcam
+super + Print
+	ffmpeg -y -f video4linux2 -s 640x480 -i /dev/video0 -ss 0:0:2 -frames 1 ~/usr/ritratti/$date.png | xclip -selection clipboard -t image/png
+
+# take a screenshot of a selection
+shift + Print
+	ss -s
+
+# take a screenshot of a selection, upload to 0x0.st and copy url to clipboard
+Print
+	ss -u
+
+# start/stop a gif recording of a selection
+ctrl + shift + Print
+  { record -f 30 -s -l -c 0.3\,0\,0.5\,0.3 -e gif -dir "/home/liabri/videos/$(date +%s).gif" | (trap '' INT; notify-send "pooooop") }
+
+# start/stop a gif recording of a selection, upload to 0x0.st and copy url to clipboard
+ctrl + Print
+   { record -f 30 -s -l -c 0.3\,0\,0.5\,0.3 -e gif | (trap '' INT; curl -F "file=@-" 0x0.st | xclip -selection clipboard && notify-send "video uploaded to 0x0.st") }
+
+# =====
+# bspwm
+# =====
+
+# kill application
+alt + q
+	bspc node -k
+
+# close application
+super + q
+	bspc node -c
+
+# swap between monocle and tiled
+super + r
+	bspc desktop -l next
+
+# restart bspwm
+super + shift + Escape
+	bspwm_restart
+
+# focus on the node in the given direction
+super + {Left, Down, Up, Right, a, s, w, d}
+	bspc node -f {west,south,north,east,west,south,north,east}
+
+# swap nodes in any given direction or MOVE to a blank monitor
+alt + {Left, Down, Up, Right, a, s, w, d}
+    d={west,south,north,east,west,south,north,east}; bspc node -s $d --follow || bspc node -m $d --follow; cursor 
+
+# select virtual desktop
+super + {1,2,3,4,5,6,7,8,9,0}
+	bspc desktop -f {1,2,3,4,5,6,7,8,9,10}
+
+# move application to specified virtual desktop
+super + shift + {1,2,3,4,5,6,7,8,9,0}
+	bspc node -d {1,2,3,4,5,6,7,8,9,10} --follow
+
+# resize size of window
+alt + shift + {Left, Down, Up, Right, a, s, w, d}
+    bspwm_resize {west,south,north,east,west,south,north,east}	
+
+alt + Tab
+	bspc node -f next;
+
+alt + shift + Tab
+	bspc node -f prev;
+
+XF86MonBrightnessUp
+	brightness up
+
+XF86MonBrightnessDown
+	brightness down

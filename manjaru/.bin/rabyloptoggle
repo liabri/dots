@@ -1,0 +1,25 @@
+#!/bin/sh
+
+f="/tmp/polyhide"
+[ -f "$f" ] || touch "$f"
+
+if [ "$(cat "$f")" = 1 ]; then
+
+    echo 0 > "$f"
+    bspc config top_padding 0
+    bspc config top_monocle_padding 0
+
+    # for i in $(seq 28 -2 0); do
+    #     bspc config top_padding $i
+    #     sleep 0.002
+    # done
+else
+    echo 1 > "$f"
+    bspc config top_padding 28
+    bspc config top_monocle_padding 10
+
+    # for i in $(seq 0 2 28); do
+    #     bspc config top_padding $i
+    #     sleep 0.002
+    # done
+fi
