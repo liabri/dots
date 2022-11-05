@@ -15,7 +15,7 @@ alias doc="zathura --fork"
 
 # git 
 alias ga="git add"
-alias gp="git push"
+alias gp="git push -u origin master"
 alias gs="git status"
 alias gc="git commit"
 alias gaa="git add -A"
