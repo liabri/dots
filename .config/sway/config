@@ -20,7 +20,7 @@ bindsym $mod+t exec foot
 bindsym $mod+e exec "rofi -show drun"
 bindsym $mod+f exec firefox
 bindsym $mod+v exec thunar
-bindsym $mod+o exec subl3
+bindsym $mod+o exec subl
 bindsym $mod+grave exec "foot btop"
 
 ## keyboard layouts
