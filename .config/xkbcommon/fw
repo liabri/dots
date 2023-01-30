@@ -1,0 +1,65 @@
+default partial alphanumeric_keys
+xkb_symbols "basic" {
+
+    name[Group1]="fw";
+
+    key <CAPS> { [ 	   Caps_Lock 							   ] };
+    key <TLDE> { [            々,         ～ 				   ] }; 
+    key <BKSL> { [            ＼,         ｜                    ] }; 
+    key <SPCE> { [         space,      space     			   ] };
+    key <BKSP> { [ 	   BackSpace			 				   ] };
+
+    key <AB01> { [      	   z,          Z                   ] }; 
+    key <AB02> { [      	   x,          X                   ] }; 
+    key <AB03> { [      	   c,          C                   ] }; 
+    key <AB04> { [      	   v,          V                   ] }; 
+    key <AB05> { [      	   b,          B                   ] }; 
+    key <AB06> { [      	   n,          N                   ] }; 
+    key <AB07> { [      	   m,          M                   ] }; 
+    key <AB08> { [  	       、,         《,         〈       ] }; 
+    key <AB09> { [ 		       。,         》,          〉      ] }; 
+    key <AB10> { [		       ／,         ？                   ] }; 
+    
+    key <AC01> { [      	   a,          A                   ] }; 
+    key <AC02> { [      	   s,          S                   ] }; 
+    key <AC03> { [      	   d,          D                   ] }; 
+    key <AC04> { [      	   f,          F                   ] }; 
+    key <AC05> { [      	   g,          G                   ] }; 
+    key <AC06> { [             h,          H                   ] }; 
+    key <AC07> { [      	   j,          J                   ] }; 
+    key <AC08> { [      	   k,          K                   ] }; 
+    key <AC09> { [      	   l,          L                   ] }; 
+    key <AC10> { [	          ；,          ：                   ] };
+    key <AC11> { [	          の,          〃                   ] }; 
+
+    key <AD01> { [             q,          Q                   ] }; 
+    key <AD02> { [             w,          W                   ] }; 
+    key <AD03> { [             e,          E                   ] }; 
+    key <AD04> { [             r,          R                   ] }; 
+    key <AD05> { [             t,          T                   ] }; 
+    key <AD06> { [             y,          Y                   ] }; 
+    key <AD07> { [             u,          U                   ] }; 
+    key <AD08> { [             i,          I     	           ] }; 
+    key <AD09> { [             o,          O                   ] }; 
+    key <AD10> { [             p,          P                   ] }; 
+    key <AD11> { [             「,         『,          【      ] }; 
+    key <AD12> { [             」,         』,           】     ] }; 
+
+    key <AE01> { [        	   １,	       ！                  ] }; 
+    key <AE02> { [        	   ２,     	   ＠                  ] }; 
+    key <AE03> { [        	   ３,         ＃,                 ] }; 
+    key <AE04> { [        	   ４,         ￥,          ［      ] }; 
+    key <AE05> { [        	   ５,         ％,           ］     ] }; 
+    key <AE06> { [             ６,         ＾,          〖      ] }; 
+    key <AE07> { [        	   ７,         ＆,           〗     ] }; 
+    key <AE08> { [        	   ８,         *,           ・     ] }; 
+    key <AE09> { [        	   ９,         （,          ｛      ] }; 
+    key <AE10> { [        	   ０,         ）,           ｝     ] }; 
+    key <AE11> { [             －,          …,     emdash      ] }; 
+    key <AE12> { [             ＝,         ＋,          〇      ] }; 
+
+    include "level3(ralt_switch)"
+};
+
+
+// ﹅﹆〘〙〔〕〚〛｟｠

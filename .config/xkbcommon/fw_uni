@@ -1,0 +1,65 @@
+default partial alphanumeric_keys
+xkb_symbols "basic" {
+
+    name[Group1]="fw";
+
+    key <CAPS> { [ 	   Caps_Lock 							   ] };
+    key <TLDE> { [         U3005,      UFF5E 				   ] }; 
+    key <BKSL> { [         UFF3C,      UFF5C                   ] }; 
+    key <SPCE> { [         space,      space     			   ] };
+    key <BKSP> { [ 	   BackSpace			 				   ] };
+
+    key <AB01> { [      	   z,          Z                   ] }; 
+    key <AB02> { [      	   x,          X                   ] }; 
+    key <AB03> { [      	   c,          C                   ] }; 
+    key <AB04> { [      	   v,          V                   ] }; 
+    key <AB05> { [      	   b,          B                   ] }; 
+    key <AB06> { [      	   n,          N                   ] }; 
+    key <AB07> { [      	   m,          M                   ] }; 
+    key <AB08> { [  	   U3001,      U300A,         U3008    ] }; 
+    key <AB09> { [ 		   U3002,      U300B,         U3009    ] }; 
+    key <AB10> { [		   UFF0F,      UFF1F                   ] }; 
+    
+    key <AC01> { [      	   a,          A                   ] }; 
+    key <AC02> { [      	   s,          S                   ] }; 
+    key <AC03> { [      	   d,          D                   ] }; 
+    key <AC04> { [      	   f,          F                   ] }; 
+    key <AC05> { [      	   g,          G                   ] }; 
+    key <AC06> { [             h,          H                   ] }; 
+    key <AC07> { [      	   j,          J                   ] }; 
+    key <AC08> { [      	   k,          K                   ] }; 
+    key <AC09> { [      	   l,          L                   ] }; 
+    key <AC10> { [	       UFF1B,      UFF1A                   ] };
+    key <AC11> { [	       U306E,      U3003                   ] }; 
+
+    key <AD01> { [             q,          Q                   ] }; 
+    key <AD02> { [             w,          W                   ] }; 
+    key <AD03> { [             e,          E                   ] }; 
+    key <AD04> { [             r,          R                   ] }; 
+    key <AD05> { [             t,          T                   ] }; 
+    key <AD06> { [             y,          Y                   ] }; 
+    key <AD07> { [             u,          U                   ] }; 
+    key <AD08> { [             i,          I     	           ] }; 
+    key <AD09> { [             o,          O                   ] }; 
+    key <AD10> { [             p,          P                   ] }; 
+    key <AD11> { [         U300C,      U300E,         U3010    ] }; 
+    key <AD12> { [         U300D,      U300F,         U3011    ] }; 
+
+    key <AE01> { [         UFF11,	   UFF01                   ] }; 
+    key <AE02> { [         UFF12,      UFF20                   ] }; 
+    key <AE03> { [         UFF13,      UFF03                   ] }; 
+    key <AE04> { [         UFF14,      UFFE5,         UFF3B    ] }; 
+    key <AE05> { [         UFF15,      UFF05,         UFF3D    ] }; 
+    key <AE06> { [         UFF16,      UFF3E,         U3016    ] }; 
+    key <AE07> { [         UFF17,      UFF06,         U3017    ] }; 
+    key <AE08> { [         UFF18,   asterisk,         U30FB    ] }; 
+    key <AE09> { [         UFF19,      UFF08,         UFF5B    ] }; 
+    key <AE10> { [         UFF10,      UFF09,         UFF5D    ] }; 
+    key <AE11> { [         UFF0D,      U2026,         emdash   ] }; 
+    key <AE12> { [         UFF1D,      UFF0B,         U3007    ] }; 
+
+    include "level3(ralt_switch)"
+};
+
+
+// ﹅﹆〘〙〔〕〚〛｟｠
