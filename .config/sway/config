@@ -10,8 +10,16 @@ set $up w
 set $right d
 
 ### Settings
-default_border pixel
-default_floating_border pixel
+xwayland enabled
+
+default_border pixel pixel 1
+default_floating_border none
+smart_borders on
+smart_gaps on
+mouse_warping container
+popup_during_fullscreen smart
+
+client.focused #9977b5 #9977b5 #9977b5
 
 ### Key bindings
 
@@ -21,16 +29,24 @@ bindsym $mod+e exec "rofi -show drun"
 bindsym $mod+f exec firefox
 bindsym $mod+v exec thunar
 bindsym $mod+o exec subl
+bindsym $mod+p exec rofi_powermode
+bindsym $mod+m exec "rofi -show calc"
 bindsym $mod+grave exec "foot btop"
+bindsym $mod+c fullscreen disable, exec "foot -a=fittex fittex"
+for_window [app_id="fittex"] floating enable
+for_window [app_id="fittex"] sticky enable
+for_window [app_id="fittex"] border none
+
 
 ## keyboard layouts
-bindsym $alt+space exec kb
-bindsym $alt+$alt_gr exec "swaymsg input '1:1:AT_Translated_Set_2_keyboard' xkb_switch_layout 1"
+bindsym $alt+comma exec kb
+bindsym $alt+space exec "swaymsg input 1:1:AT_Translated_Set_2_keyboard xkb_switch_layout next"
 
 ## misc
 bindsym Print exec ss
-bindsym $mod+k exec "/home/liabri/.cargo/bin/swww img $(find ritratti/tapizzerija -type f | shuf -n1) --transition-step 255 --transition-fps 255"
-bindsym $mod+p exec rofi_powermode
+bindsym Print+Shift exec "record -no gif"
+bindsym Print+Shift+Ctrl exec "record -no mp4"
+bindsym $mod+l exec wp
 
 ## brightness
 bindsym XF86MonBrightnessDown exec "brightnessctl s 5%-"
@@ -59,28 +75,22 @@ bindsym $mod+Shift+c reload
 floating_modifier $mod normal
 
 # Move your focus around
-bindsym $mod+$left focus left
-bindsym $mod+$down focus down
-bindsym $mod+$up focus up
-bindsym $mod+$right focus right
+bindsym $mod+$left fullscreen disable, focus left
+bindsym $mod+$down fullscreen disable, focus down
+bindsym $mod+$up fullscreen disable, focus up
+bindsym $mod+$right fullscreen disable, focus right
 
-# Ditto, with arrow keys
-bindsym $mod+Left focus left
-bindsym $mod+Down focus down
-bindsym $mod+Up focus up
-bindsym $mod+Right focus right
+# Move the focused window
+bindsym alt+$left move left
+bindsym alt+$down move down
+bindsym alt+$up move up
+bindsym alt+$right move right
 
-# Move the focused window with the same, but add Shift
-bindsym $mod+Shift+$left move left
-bindsym $mod+Shift+$down move down
-bindsym $mod+Shift+$up move up
-bindsym $mod+Shift+$right move right
-
-# Ditto, with arrow keys
-bindsym $mod+Shift+Left move left
-bindsym $mod+Shift+Down move down
-bindsym $mod+Shift+Up move up
-bindsym $mod+Shift+Right move right
+# Resizing containers:
+bindsym $mod+Shift+$left resize shrink width 10px
+bindsym $mod+Shift+$down resize grow height 10px
+bindsym $mod+Shift+$up resize shrink height 10px
+bindsym $mod+Shift+$right resize grow width 10px
 
 # Switch to workspace
 bindsym $mod+1 workspace number 1
@@ -109,45 +119,39 @@ bindsym $mod+Shift+0 move container to workspace number 0
 ## Layout stuff:
 bindsym $mod+x layout toggle split
 bindsym $mod+r fullscreen
-# bindsym $mod+k floating toggle
+bindsym $mod+k floating toggle
 
 # Swap focus between the tiling area and the floating area
-# bindsym $mod+space focus mode_toggle
-
-# Move focus to the parent container
-# bindsym $mod+a focus parent
-
-# Resizing containers:
-bindsym alt+Shift+$left resize shrink width 10px
-bindsym alt+Shift+$down resize grow height 10px
-bindsym alt+Shift+$up resize shrink height 10px
-bindsym alt+Shift+$right resize grow width 10px
-
-# Ditto, with arrow keys
-bindsym alt+Shift+Left resize shrink width 10px
-bindsym alt+Shift+Down resize grow height 10px
-bindsym alt+Shift+Up resize shrink height 10px
-bindsym alt+Shift+Right resize grow width 10px
+bindsym $mod+z focus mode_toggle
 
 ### startup app
 exec waybar
 exec dunst
 exec mpd
 exec /usr/libexec/xdg-desktop-portal
-exec "/home/liabri/.cargo/bin/swww init"
-exec "/home/liabri/.cargo/bin/swww img $(find ritratti/tapizzerija -type f | shuf -n1)"
-exec /home/liabri/.cargo/bin/benten
+exec "swww kill"
+exec "swww init"
+exec wp
+# exec /home/liabri/.cargo/bin/benten
+exec gsettings set org.gnome.desktop.interface cursor-theme cz-Hickson-Black
+exec gsettings set org.gnome.desktop.interface icon-theme sage
+exec "python /usr/share/sway/scripts/inactive-windows-transparency.py --opacity 0.98"
 
 ### libinput
 
 input * {
-	xkb_layout "bu,ru"
+	xkb_layout "bu,ru,fw"
 	xkb_switch_layout 0
 }
 
 input type:touchpad {
     tap enabled
     natural_scroll enabled
+}
+
+input "1386:891:Wacom_One_by_Wacom_M_Pen" {
+	# LeftHanded enabled
+	left_handed enabled
 }
 
 include /etc/sway/config.d/*
