@@ -8,6 +8,8 @@
 
 **exists:** well, does it exists ? currently supports glyph lookup in fonts
 
+**fittex:** opens fzf; on enter of an entry will open using xdg-open
+
 **lwien:** print terminal colours
 
 **mh:** fun lil trinket
