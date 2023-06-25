@@ -1,0 +1,58 @@
+partial alphanumeric_keys
+xkb_symbols "basic" {
+
+    name[Group1]="rsc";
+
+    key <CAPS> { [     Caps_Lock                                                    ] };
+    key <TLDE> { [         grave, asciitilde,     dead_tilde,                degree ] }; // tilde
+    key <BKSL> { [     backslash,        bar,     dead_caron,                 U00A7 ] }; // / | ˇ §
+    key <SPCE> { [         space,      space,   nobreakspace                        ] };
+    key <BKSP> { [     BackSpace                                                    ] };
+
+    key <AB01> { [   Cyrillic_ze, Cyrillic_ZE                                       ] }; // z
+    key <AB02> { [  Cyrillic_sha,Cyrillic_SHA                                       ] }; // x
+    key <AB03> { [  Cyrillic_tse,Cyrillic_TSE                                       ] }; // c
+    key <AB04> { [   Cyrillic_ve, Cyrillic_VE                                       ] }; // v
+    key <AB05> { [   Cyrillic_be, Cyrillic_BE                                       ] }; // b
+    key <AB06> { [   Cyrillic_en, Cyrillic_EN,    Cyrillic_nje,        Cyrillic_NJE ] }; // n
+    key <AB07> { [   Cyrillic_em, Cyrillic_EM                                       ] }; // m
+
+    key <AC01> { [    Cyrillic_a,  Cyrillic_A                                       ] }; // a
+    key <AC02> { [   Cyrillic_es, Cyrillic_ES                                       ] }; // s
+    key <AC03> { [   Cyrillic_de, Cyrillic_DE,     Serbian_dje,         Serbian_DJE ] }; // d
+    key <AC04> { [   Cyrillic_ef, Cyrillic_EF,   Cyrillic_dzhe,       Cyrillic_DZHE ] }; // f
+    key <AC05> { [  Cyrillic_ghe,Cyrillic_GHE                                       ] }; // g
+    key <AC06> { [   Cyrillic_ha, Cyrillic_HA                                       ] }; // h
+    key <AC07> { [   Cyrillic_je, Cyrillic_JE                                       ] }; // j
+    key <AC08> { [   Cyrillic_ka, Cyrillic_KA                                       ] }; // k
+    key <AC09> { [   Cyrillic_el, Cyrillic_EL,    Cyrillic_lje,        Cyrillic_LJE ] }; // l
+    key <AC10> { [     semicolon,       colon,      dead_grave,    dead_doublegrave ] }; // ; : ` 
+    key <AC11> { [    apostrophe,    quotedbl,           U2019,    dead_doubleacute ] }; // ' " ´ ˝
+
+    key <AD01> { [  Serbian_tshe,Serbian_TSHE                                       ] }; // q
+    key <AD02> { [  Cyrillic_che,Cyrillic_CHE                                       ] }; // w
+    key <AD03> { [   Cyrillic_ie, Cyrillic_IE                                       ] }; // e
+    key <AD04> { [   Cyrillic_er, Cyrillic_ER                                       ] }; // r
+    key <AD05> { [   Cyrillic_te, Cyrillic_TE                                       ] }; // t
+    key <AD06> { [  Cyrillic_zhe,Cyrillic_ZHE                                       ] }; // y
+    key <AD07> { [    Cyrillic_u,  Cyrillic_U                                       ] }; // u
+    key <AD08> { [    Cyrillic_i,  Cyrillic_I                                       ] }; // i
+    key <AD09> { [    Cyrillic_o,  Cyrillic_O                                       ] }; // o
+    key <AD10> { [   Cyrillic_pe, Cyrillic_PE                                       ] }; // p
+    key <AD11> { [   bracketleft,   braceleft,  guillemotright, leftdoublequotemark ] }; // [ { « “
+    key <AD12> { [  bracketright,  braceright,   guillemotleft,rightdoublequotemark ] }; // ] } » ”
+
+    key <AE01> { [             1,     exclam,     exclamdown                        ] }; // 1 ! ¡
+    key <AE02> { [             2,         at,    Greek_alpha                        ] }; // 2 @ α
+    key <AE03> { [             3, numbersign,     Greek_beta                        ] }; // 3 # β
+    key <AE04> { [             4,     dollar,       EuroSign,                  cent ] }; // 4 $ € ¢
+    key <AE05> { [             5,    percent,    Greek_gamma                        ] }; // 5 % γ
+    key <AE06> { [             6,asciicircum,dead_circumflex                        ] }; // 6 ^ ^
+    key <AE07> { [             7,  ampersand,    Greek_delta                        ] }; // 7 ^ δ
+    key <AE08> { [             8,   asterisk,         0x00B7                        ] }; // 8 & ·
+    key <AE09> { [             9,  parenleft,  Greek_epsilon                        ] }; // 9 $ ε
+    key <AE10> { [             0, parenright,     Greek_zeta                        ] }; // 0 ) ζ
+    key <AE11> { [         minus, underscore,         emdash,                endash ] }; // - _ — –
+    key <AE12> { [         equal,       plus,       multiply,              division ] }; // = + × ÷
+ 
+};

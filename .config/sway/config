@@ -24,29 +24,29 @@ client.focused #9977b5 #9977b5 #9977b5
 ### Key bindings
 
 ## launch applications
-bindsym $mod+t exec foot
-bindsym $mod+e exec "rofi -show drun"
-bindsym $mod+f exec firefox
-bindsym $mod+v exec thunar
-bindsym $mod+o exec subl
-bindsym $mod+p exec rofi_powermode
-bindsym $mod+m exec "rofi -show calc"
-bindsym $mod+grave exec "foot btop"
-bindsym $mod+c fullscreen disable, exec "foot -a=fittex fittex"
+bindsym --to-code $mod+t exec foot
+bindsym --to-code $mod+e exec "rofi -show drun"
+bindsym --to-code $mod+f exec firefox
+bindsym --to-code $mod+v exec thunar
+bindsym --to-code $mod+o exec subl
+bindsym --to-code $mod+p exec rofi_powermode
+bindsym --to-code $mod+m exec "rofi -show calc"
+bindsym --to-code $mod+grave exec "foot btop"
+bindsym --to-code $mod+c fullscreen disable, exec "foot -a=fittex fittex"
 for_window [app_id="fittex"] floating enable
 for_window [app_id="fittex"] sticky enable
 for_window [app_id="fittex"] border none
 
 
 ## keyboard layouts
-bindsym $alt+comma exec kb
-bindsym $alt+space exec "swaymsg input 1:1:AT_Translated_Set_2_keyboard xkb_switch_layout next"
+bindsym --to-code $alt+tab exec kb
+bindsym --to-code $alt+grave exec "swaymsg input 1:1:AT_Translated_Set_2_keyboard xkb_switch_layout 1"
 
 ## misc
 bindsym Print exec ss
 bindsym Print+Shift exec "record -no gif"
 bindsym Print+Shift+Ctrl exec "record -no mp4"
-bindsym $mod+l exec wp
+bindsym --to-code $mod+l exec wp
 
 ## brightness
 bindsym XF86MonBrightnessDown exec "brightnessctl s 5%-"
@@ -54,15 +54,15 @@ bindsym XF86MonBrightnessUp exec "brightnessctl s 5%+"
 
 ## volume 
 # current window
-# bindsym $mod+bracketright exec "vol w +5" 
-# bindsym $mod+braceleft exec "vol w -5"
-# bindsym $mod+\ exec "vol wm"
-# bindsym $mod+/ exec "vol wd"
+# bindsym --to-code $mod+bracketright exec "vol w +5" 
+# bindsym --to-code $mod+braceleft exec "vol w -5"
+# bindsym --to-code $mod+\ exec "vol wm"
+# bindsym --to-code $mod+/ exec "vol wd"
 
 # mpd
-# bindsym $alt+] exec "vol c +5"
-# bindsym $alt+bracketleft exec "vol c -5"
-# bindsym $alt+\ exec "vol cp"
+# bindsym --to-code $alt+] exec "vol c +5"
+# bindsym --to-code $alt+bracketleft exec "vol c -5"
+# bindsym --to-code $alt+\ exec "vol cp"
 
 # system 
 bindsym XF86AudioLowerVolume exec "vol s -5"
@@ -70,59 +70,59 @@ bindsym XF86AudioRaiseVolume exec "vol s +5"
 bindsym XF86AudioMute exec "vol sm"
 
 ## sway 
-bindsym $mod+q kill
-bindsym $mod+Shift+c reload
+bindsym --to-code $mod+q kill
+bindsym --to-code $mod+Shift+c reload
 floating_modifier $mod normal
 
 # Move your focus around
-bindsym $mod+$left fullscreen disable, focus left
-bindsym $mod+$down fullscreen disable, focus down
-bindsym $mod+$up fullscreen disable, focus up
-bindsym $mod+$right fullscreen disable, focus right
+bindsym --to-code $mod+$left fullscreen disable, focus left
+bindsym --to-code $mod+$down fullscreen disable, focus down
+bindsym --to-code $mod+$up fullscreen disable, focus up
+bindsym --to-code $mod+$right fullscreen disable, focus right
 
 # Move the focused window
-bindsym alt+$left move left
-bindsym alt+$down move down
-bindsym alt+$up move up
-bindsym alt+$right move right
+bindsym --to-code alt+$left move left
+bindsym --to-code alt+$down move down
+bindsym --to-code alt+$up move up
+bindsym --to-code alt+$right move right
 
 # Resizing containers:
-bindsym $mod+Shift+$left resize shrink width 10px
-bindsym $mod+Shift+$down resize grow height 10px
-bindsym $mod+Shift+$up resize shrink height 10px
-bindsym $mod+Shift+$right resize grow width 10px
+bindsym --to-code $mod+Shift+$left resize shrink width 10px
+bindsym --to-code $mod+Shift+$down resize grow height 10px
+bindsym --to-code $mod+Shift+$up resize shrink height 10px
+bindsym --to-code $mod+Shift+$right resize grow width 10px
 
 # Switch to workspace
-bindsym $mod+1 workspace number 1
-bindsym $mod+2 workspace number 2
-bindsym $mod+3 workspace number 3
-bindsym $mod+4 workspace number 4
-bindsym $mod+5 workspace number 5
-bindsym $mod+6 workspace number 6
-bindsym $mod+7 workspace number 7
-bindsym $mod+8 workspace number 8
-bindsym $mod+9 workspace number 9
-bindsym $mod+0 workspace number 0
+bindsym --to-code $mod+1 workspace number 1
+bindsym --to-code $mod+2 workspace number 2
+bindsym --to-code $mod+3 workspace number 3
+bindsym --to-code $mod+4 workspace number 4
+bindsym --to-code $mod+5 workspace number 5
+bindsym --to-code $mod+6 workspace number 6
+bindsym --to-code $mod+7 workspace number 7
+bindsym --to-code $mod+8 workspace number 8
+bindsym --to-code $mod+9 workspace number 9
+bindsym --to-code $mod+0 workspace number 0
 
 # Move focused container to workspace
-bindsym $mod+Shift+1 move container to workspace number 1
-bindsym $mod+Shift+2 move container to workspace number 2
-bindsym $mod+Shift+3 move container to workspace number 3
-bindsym $mod+Shift+4 move container to workspace number 4
-bindsym $mod+Shift+5 move container to workspace number 5
-bindsym $mod+Shift+6 move container to workspace number 6
-bindsym $mod+Shift+7 move container to workspace number 7
-bindsym $mod+Shift+8 move container to workspace number 8
-bindsym $mod+Shift+9 move container to workspace number 9
-bindsym $mod+Shift+0 move container to workspace number 0
+bindsym --to-code $mod+Shift+1 move container to workspace number 1
+bindsym --to-code $mod+Shift+2 move container to workspace number 2
+bindsym --to-code $mod+Shift+3 move container to workspace number 3
+bindsym --to-code $mod+Shift+4 move container to workspace number 4
+bindsym --to-code $mod+Shift+5 move container to workspace number 5
+bindsym --to-code $mod+Shift+6 move container to workspace number 6
+bindsym --to-code $mod+Shift+7 move container to workspace number 7
+bindsym --to-code $mod+Shift+8 move container to workspace number 8
+bindsym --to-code $mod+Shift+9 move container to workspace number 9
+bindsym --to-code $mod+Shift+0 move container to workspace number 0
 
 ## Layout stuff:
-bindsym $mod+x layout toggle split
-bindsym $mod+r fullscreen
-bindsym $mod+k floating toggle
+bindsym --to-code $mod+x layout toggle split
+bindsym --to-code $mod+r fullscreen
+bindsym --to-code $mod+k floating toggle
 
 # Swap focus between the tiling area and the floating area
-bindsym $mod+z focus mode_toggle
+bindsym --to-code $mod+z focus mode_toggle
 
 ### startup app
 exec waybar
@@ -140,7 +140,7 @@ exec "python /usr/share/sway/scripts/inactive-windows-transparency.py --opacity 
 ### libinput
 
 input * {
-	xkb_layout "bu,ru,fw"
+	xkb_layout "bu,rsc,fw"
 	xkb_switch_layout 0
 }
 
