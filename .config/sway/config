@@ -39,8 +39,8 @@ for_window [app_id="fittex"] border none
 
 
 ## keyboard layouts
-bindsym --to-code $alt+tab exec kb
-bindsym --to-code $alt+grave exec "swaymsg input 1:1:AT_Translated_Set_2_keyboard xkb_switch_layout 1"
+bindsym --to-code $alt+tab exec "kb zh"
+bindsym --to-code $alt+grave exec "kb rs"
 
 ## misc
 bindsym Print exec ss
