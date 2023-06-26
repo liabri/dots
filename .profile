@@ -1,5 +1,6 @@
 export PATH="$(find ~/.bin/ -maxdepth 1 -type d | sed 's|/$||'| tr '\n' ':')$PATH"
 
+# xdg
 export XDG_DESKTOP_DIR="$HOME/.local/share"
 export XDG_DOCUMENTS_DIR="$HOME/dokumenti"
 export XDG_DOWNLOAD_DIR="$HOME/minzel"
@@ -15,9 +16,6 @@ export XDG_CONFIG_HOME="$HOME/.config"
 export XDG_CACHE_HOME="$HOME/.cache"
 export XDG_DATA_HOME="$HOME/.local/share"
 export XDG_STATE_HOME="$HOME/.local/state"
-
-# temporary for wayland
-export MOZ_ENABLE_WAYLAND=1
 
 # locale
 export LANG="en_US.utf8"
@@ -35,5 +33,13 @@ export LC_MEASUREMENT="en_US.utf8"
 export LC_IDENTIFICATION="en_US.utf8"
 export LC_ALL="en_US.utf8"
 
-# for games
+# temporary for wayland
+export MOZ_ENABLE_WAYLAND=1
 export SDL_VIDEODRIVER=wayland
+
+# user-wide ssh agent magic
+export SSH_AUTH_SOCK=$HOME/.ssh/ssh_agent.sock
+ssh-add -l 2>/dev/null >/dev/null
+if [ $? -ge 2 ]; then
+  ssh-agent -a "$SSH_AUTH_SOCK" >/dev/null
+fi
