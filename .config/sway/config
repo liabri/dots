@@ -49,25 +49,15 @@ bindsym Print+Shift+Ctrl exec "record -no mp4"
 bindsym --to-code $mod+l exec wp
 
 ## brightness
-bindsym XF86MonBrightnessDown exec "brightnessctl s 5%-"
-bindsym XF86MonBrightnessUp exec "brightnessctl s 5%+"
+# bindsym XF86MonBrightnessDown exec "brightnessctl s 5%-"
+# bindsym XF86MonBrightnessUp exec "brightnessctl s 5%+"
+bindsym XF86MonBrightnessDown exec brightnessctl s 5%- | sed -En 's/.*\(([0-9]+)%\).*/\1/p' > $WOBSOCK
+bindsym XF86MonBrightnessUp exec brightnessctl s +5% | sed -En 's/.*\(([0-9]+)%\).*/\1/p' > $WOBSOCK
 
 ## volume 
-# current window
-# bindsym --to-code $mod+bracketright exec "vol w +5" 
-# bindsym --to-code $mod+braceleft exec "vol w -5"
-# bindsym --to-code $mod+\ exec "vol wm"
-# bindsym --to-code $mod+/ exec "vol wd"
-
-# mpd
-# bindsym --to-code $alt+] exec "vol c +5"
-# bindsym --to-code $alt+bracketleft exec "vol c -5"
-# bindsym --to-code $alt+\ exec "vol cp"
-
-# system 
-bindsym XF86AudioLowerVolume exec "vol s -5"
-bindsym XF86AudioRaiseVolume exec "vol s +5"
-bindsym XF86AudioMute exec "vol sm"
+bindsym XF86AudioRaiseVolume exec amixer sset Master 5%+ | sed -En 's/.*\[([0-9]+)%\].*/\1/p' | head -1 > $WOBSOCK
+bindsym XF86AudioLowerVolume exec amixer sset Master 5%- | sed -En 's/.*\[([0-9]+)%\].*/\1/p' | head -1 > $WOBSOCK
+bindsym XF86AudioMute exec amixer sset Master toggle | sed -En '/\[on\]/ s/.*\[([0-9]+)%\].*/\1/ p; /\[off\]/ s/.*/0/p' | head -1 > $WOBSOCK
 
 ## sway 
 bindsym --to-code $mod+q kill
@@ -129,13 +119,12 @@ exec waybar
 exec dunst
 exec mpd
 exec /usr/libexec/xdg-desktop-portal
-exec "swww kill"
 exec "swww init"
 exec wp
-# exec /home/liabri/.cargo/bin/benten
 exec gsettings set org.gnome.desktop.interface cursor-theme cz-Hickson-Black
 exec gsettings set org.gnome.desktop.interface icon-theme sage
 exec "python /usr/share/sway/scripts/inactive-windows-transparency.py --opacity 0.98"
+exec rm -f $WOBSOCK && mkfifo $WOBSOCK && tail -f $WOBSOCK | wob -c ~/.config/wob/wob.ini
 
 ### libinput
 
