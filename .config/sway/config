@@ -25,12 +25,10 @@ client.focused #9977b5 #9977b5 #9977b5
 
 ## launch applications
 bindsym --to-code $mod+t exec foot
-bindsym --to-code $mod+e exec "rofi -show drun"
+bindsym --to-code $mod+e exec "tofi-drun | xargs swaymsg exec --"
 bindsym --to-code $mod+f exec firefox
 bindsym --to-code $mod+v exec thunar
-bindsym --to-code $mod+o exec subl
-bindsym --to-code $mod+p exec rofi_powermode
-bindsym --to-code $mod+m exec "rofi -show calc"
+bindsym --to-code $mod+o exec zeditor
 bindsym --to-code $mod+grave exec "foot btop"
 bindsym --to-code $mod+c fullscreen disable, exec "foot -a=fittex fittex"
 for_window [app_id="fittex"] floating enable
@@ -49,17 +47,15 @@ bindsym Print+Shift+Ctrl exec "record -no mp4"
 bindsym --to-code $mod+l exec wp
 
 ## brightness
-# bindsym XF86MonBrightnessDown exec "brightnessctl s 5%-"
-# bindsym XF86MonBrightnessUp exec "brightnessctl s 5%+"
-bindsym XF86MonBrightnessDown exec brightnessctl s 5%- | sed -En 's/.*\(([0-9]+)%\).*/\1/p' > $WOBSOCK
-bindsym XF86MonBrightnessUp exec brightnessctl s +5% | sed -En 's/.*\(([0-9]+)%\).*/\1/p' > $WOBSOCK
+bindsym XF86MonBrightnessDown exec brightnessctl s 2%- | sed -En 's/.*\(([0-9]+)%\).*/\1/p' > $WOBSOCK
+bindsym XF86MonBrightnessUp exec brightnessctl s 2%+ | sed -En 's/.*\(([0-9]+)%\).*/\1/p' > $WOBSOCK
 
-## volume 
+## volume
 bindsym XF86AudioRaiseVolume exec amixer sset Master 5%+ | sed -En 's/.*\[([0-9]+)%\].*/\1/p' | head -1 > $WOBSOCK
 bindsym XF86AudioLowerVolume exec amixer sset Master 5%- | sed -En 's/.*\[([0-9]+)%\].*/\1/p' | head -1 > $WOBSOCK
 bindsym XF86AudioMute exec amixer sset Master toggle | sed -En '/\[on\]/ s/.*\[([0-9]+)%\].*/\1/ p; /\[off\]/ s/.*/0/p' | head -1 > $WOBSOCK
 
-## sway 
+## sway
 bindsym --to-code $mod+q kill
 bindsym --to-code $mod+Shift+c reload
 floating_modifier $mod normal
@@ -119,8 +115,7 @@ exec waybar
 exec dunst
 exec mpd
 exec /usr/libexec/xdg-desktop-portal
-exec "swww init"
-exec wp
+exec swww-daemon
 exec gsettings set org.gnome.desktop.interface cursor-theme cz-Hickson-Black
 exec gsettings set org.gnome.desktop.interface icon-theme sage
 exec "python /usr/share/sway/scripts/inactive-windows-transparency.py --opacity 0.98"
@@ -136,6 +131,11 @@ input * {
 input type:touchpad {
     tap enabled
     natural_scroll enabled
+}
+
+input type:pointer {
+    accel_profile "flat"
+    pointer_accel 0
 }
 
 input "1386:891:Wacom_One_by_Wacom_M_Pen" {
