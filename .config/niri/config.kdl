@@ -10,7 +10,7 @@ spawn-at-startup "swww-daemon"
 
 prefer-no-csd // no client side decorations
 
-screenshot-path "~/ritratti/fotoskermi/%Y%m%d%H%M%S.png"
+screenshot-path "/home/liabri/.local/share/fotoskermi/%Y%m%d%H%M%S.png"
 hotkey-overlay { skip-at-startup; }
 
 environment {
@@ -31,7 +31,7 @@ gestures {
 input {
     keyboard {
         xkb {
-            layout "bu,rsc,fw"
+            layout "bu"
         }
     }
 
@@ -83,23 +83,24 @@ binds {
 
     // launch applications
     Mod+T hotkey-overlay-title="open a terminal: foot" { spawn "foot"; }
-    Mod+E hotkey-overlay-title="open an application launcher: tofi" { spawn "tofi-drun"; }
-    Mod+F hotkey-overlay-title="open a browser: chromium" { spawn "chromium"; }
+    Mod+E hotkey-overlay-title="open an application launcher: fuzzel" { spawn "fuzzel"; }
+    Mod+K hotkey-overlay-title="open a calendar: fuzzel-cal" { spawn "fuzzel-cal"; }
+    Mod+F hotkey-overlay-title="open a browser: chromium" { spawn "chromium" "--ozone-platform=wayland"; }
+    Mod+G hotkey-overlay-title="open discord: webcord" { spawn "webcord"; }
     Mod+V hotkey-overlay-title="open a file manager: thunar" { spawn "thunar"; }
     Mod+O hotkey-overlay-title="open a text editor: zed" { spawn "zeditor"; }
     Mod+grave hotkey-overlay-title="open a resource monitor: btop" { spawn "foot" "btop"; }
 
-    // kb layouts
-    Alt+tab hotkey-overlay-title="kb alternate between zh bu" { spawn "kb" "zh"; }
-    Alt+grave hotkey-overlay-title="kb alternate between rs bu" { spawn "kb" "rs"; }
+    // kb layouts -- kb script doesnt work in niri
+    //Alt+Tab hotkey-overlay-title="kb alternate between zh bu" { spawn "kb" "zh"; }
+    //Alt+Grave hotkey-overlay-title="kb alternate between rs bu" { spawn "kb" "rs"; }
 
     // screen capture
-    // Print hotkey-overlay-title="take a screenshot" { spawn "ss"; }
     // Print+Shift hotkey-overlay-title="record a gif" { spawn "record" "-no" "gif"; }
     // Print+Shift+Ctrl hotkey-overlay-title="record an mp4" { spawn "record" "-no" "mp4"; }
 
     // misc
-    Mod+K hotkey-overlay-title="change wallpaper: swww" { spawn "wp"; }
+    Mod+P hotkey-overlay-title="change wallpaper: swww" { spawn "wp"; }
     Mod+L hotkey-overlay-title="Lock the Screen: swaylock" { spawn "swaylock"; }
 
     // volume
@@ -122,10 +123,6 @@ binds {
     Mod+W     { focus-window-or-workspace-up; }
     Mod+D     { focus-column-right; }
 
-    Alt+Left  { move-column-left; }
-    Alt+Down  { move-window-down; }
-    Alt+Up    { move-window-up; }
-    Alt+Right { move-column-right; }
     Alt+A     { move-column-left; }
     Alt+S     { move-window-down; }
     Alt+W     { move-window-up; }
@@ -185,7 +182,7 @@ binds {
     Mod+BracketLeft  { consume-or-expel-window-left; }
     Mod+BracketRight { consume-or-expel-window-right; }
     Mod+M { toggle-column-tabbed-display; }
-    Mod+N repeat=false { toggle-overview; }
+    Mod+Tab repeat=false { toggle-overview; }
 
     // Mod+C { center-column; }
     // Mod+Ctrl+C { center-visible-columns; }
@@ -227,6 +224,12 @@ window-rule {
 }
 
 window-rule {
+    match app-id="WebCord"
+    open-maximized true
+    open-on-workspace "chat"
+}
+
+window-rule {
     match app-id="darktable"
     open-maximized true
 }
@@ -239,10 +242,4 @@ window-rule {
 window-rule {
    match is-focused=false
    opacity 0.97
-}
-
-window-rule {
-    //tofi
-    //    default-floating-position x=10 y=10 relative-to="bottom-right"
-
 }
