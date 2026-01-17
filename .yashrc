@@ -1,6 +1,3 @@
-[ -r ~/.profile ] && . ~/.profile
-[ -r ~/.cargo/env ] && . ~/.cargo/env
-
 # colours
 alias grep="grep --color=auto"
 alias ls="ls --color=auto"
@@ -13,7 +10,11 @@ alias free="free -m"                    # show sizes in MB
 alias feo="fastfetch"
 alias doc="zathura --fork"
 
-# git 
+# pass
+pass(){ [[ "$1" == "otp" ]] && shift && command pass otp -c "$@" || ([[ "$1" == "-c" || "$1" == "--clip" ]] && command pass "$@" || command pass -c "$@"); }
+
+
+# git
 alias ga="git add"
 alias gp="git push -u origin master"
 alias gs="git status"
@@ -67,3 +68,5 @@ if [ "$TERM" = "linux" ]; then
     echo -en "\e]PFdaddee" #white
     clear #for background artifacting
 fi
+
+[ -r ~/.cargo/env ] && . ~/.cargo/env

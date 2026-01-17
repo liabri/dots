@@ -3,7 +3,7 @@
 ### Fonts
 
 	font = "青鸟华光仿宋2"
-	font-size = 17
+	font-size = 35
 	font-features = ""
 	font-variations = ""
 	hint-font = true
@@ -62,11 +62,11 @@
 
 ### Text layout
 
-	prompt-text = "   ~"
-	prompt-padding = 50
+	prompt-text = "~"
+	prompt-padding = 80
 	placeholder-text = ""
 	num-results = 0
-	result-spacing = 15
+	result-spacing = 25
 
 	horizontal = false
 	min-input-width = 0
@@ -84,10 +84,10 @@
 
 	corner-radius = 10
 
-	padding-top = 26
-	padding-bottom = 8
-	padding-left = 8
-	padding-right = 8
+	padding-top = 50
+	padding-bottom = 50
+	padding-left = 200
+	padding-right = 200
 
 	clip-to-padding = true
 	scale = false
@@ -98,15 +98,14 @@
 	anchor = center
 	exclusive-zone = -1
 
-	margin-top = 0
+	margin-top = 300
 	margin-bottom = 0
-	margin-left = 0
+	margin-left = 600
 	margin-right = 0
 
-#
 ### Behaviour
-#
-	hide-cursor = false
+
+	hide-cursor = true
 	text-cursor = true
 	history = true
 
@@ -114,15 +113,8 @@
 	auto-accept-single = false
 	hide-input = false
 	hidden-character = "*"
-	drun-launch = false
+	drun-launch = true
 	terminal = foot
 	late-keyboard-init = false
 	multi-instance = false
 	ascii-input = false
-
-
-### Inclusion
-
-	# Configs can be split between multiple files, and then included
-	# within each other.
-	# include = /path/to/config

@@ -1,0 +1,248 @@
+workspace "browser"
+workspace "bloo"
+workspace "text"
+workspace "chat"
+
+spawn-at-startup "waybar"
+spawn-at-startup "dunst"
+spawn-at-startup "swww-daemon"
+// spawn-at-startup "exec gsettings set org.gnome.desktop.interface icon-theme sage"
+
+prefer-no-csd // no client side decorations
+
+screenshot-path "~/ritratti/fotoskermi/%Y%m%d%H%M%S.png"
+hotkey-overlay { skip-at-startup; }
+
+environment {
+    ELECTRON_OZONE_PLATFORM_HINT "auto" // for electron to run with wayland
+}
+
+cursor {
+    xcursor-theme "cz-Hickson-Black"
+    hide-after-inactive-ms 30000
+}
+
+gestures {
+    hot-corners {
+        off
+    }
+}
+
+input {
+    keyboard {
+        xkb {
+            layout "bu,rsc,fw"
+        }
+    }
+
+    // libinput
+    touchpad {
+        tap
+        natural-scroll
+    }
+
+    mouse {
+        accel-speed 0.0
+        accel-profile "flat"
+    }
+
+    warp-mouse-to-focus             // move pointer to the center of newly focused windows
+    focus-follows-mouse max-scroll-amount="95%";
+}
+
+layout {
+    gaps 5
+    center-focused-column "never"   // focusing an off-screen column will keep at the left
+    default-column-width { proportion 0.5; }
+    default-column-display "tabbed"
+
+    struts { top 0; } // set to 40 to see waybar
+
+    focus-ring {
+        // How many logical pixels the ring extends out from the windows.
+        width 0
+        active-color "rgba(20,20,20,1)"
+        inactive-color "#505050"
+    }
+
+    border { off; }
+    tab-indicator {
+        off
+    }
+}
+
+// https://github.com/YaLTeR/niri/wiki/Configuration:-Animations
+animations {}
+
+// Window rules let you adjust behavior for individual windows.
+// Find more information on the wiki:
+// https://github.com/YaLTeR/niri/wiki/Configuration:-Window-Rules
+
+binds {
+    Mod+Shift+Slash { show-hotkey-overlay; }
+
+    // launch applications
+    Mod+T hotkey-overlay-title="open a terminal: foot" { spawn "foot"; }
+    Mod+E hotkey-overlay-title="open an application launcher: tofi" { spawn "tofi-drun"; }
+    Mod+F hotkey-overlay-title="open a browser: chromium" { spawn "chromium"; }
+    Mod+V hotkey-overlay-title="open a file manager: thunar" { spawn "thunar"; }
+    Mod+O hotkey-overlay-title="open a text editor: zed" { spawn "zeditor"; }
+    Mod+grave hotkey-overlay-title="open a resource monitor: btop" { spawn "foot" "btop"; }
+
+    // kb layouts
+    Alt+tab hotkey-overlay-title="kb alternate between zh bu" { spawn "kb" "zh"; }
+    Alt+grave hotkey-overlay-title="kb alternate between rs bu" { spawn "kb" "rs"; }
+
+    // screen capture
+    // Print hotkey-overlay-title="take a screenshot" { spawn "ss"; }
+    // Print+Shift hotkey-overlay-title="record a gif" { spawn "record" "-no" "gif"; }
+    // Print+Shift+Ctrl hotkey-overlay-title="record an mp4" { spawn "record" "-no" "mp4"; }
+
+    // misc
+    Mod+K hotkey-overlay-title="change wallpaper: swww" { spawn "wp"; }
+    Mod+L hotkey-overlay-title="Lock the Screen: swaylock" { spawn "swaylock"; }
+
+    // volume
+    XF86AudioRaiseVolume allow-when-locked=true { spawn "wpctl" "set-volume" "@DEFAULT_AUDIO_SINK@" "0.1+"; } // | sed -En 's/.*\[([0-9]+)%\].*/\1/p' | head -1 > $WOBSOCK
+    XF86AudioLowerVolume allow-when-locked=true { spawn "wpctl" "set-volume" "@DEFAULT_AUDIO_SINK@" "0.1-"; } // sed -En 's/.*\[([0-9]+)%\].*/\1/p' | head -1 > $WOBSOCK
+    XF86AudioMute allow-when-locked=true { spawn "wpctl" "set-mute" "@DEFAULT_AUDIO_SINK@" "toggle"; } // | sed -En '/\[on\]/ s/.*\[([0-9]+)%\].*/\1/ p; /\[off\]/ s/.*/0/p' | head -1 > $WOBSOCK
+    XF86AudioMicMute allow-when-locked=true { spawn "wpctl" "set-mute" "@DEFAULT_AUDIO_SOURCE@" "toggle"; }
+
+    XF86MonBrightnessDown allow-when-locked=true { spawn "brightnessctl" "s" "2%-"; }// | sed -En 's/.*\(([0-9]+)%\).*/\1/p' > $WOBSOCK
+    XF86MonBrightnessUp allow-when-locked=true { spawn "brightnessctl" "s" "2%+"; }// | sed -En 's/.*\(([0-9]+)%\).*/\1/p' > $WOBSOCK
+
+    // layout
+    Mod+Q allow-inhibiting=false { close-window; }
+    Mod+Left  { focus-column-left; }
+    Mod+Down  { focus-window-down; }
+    Mod+Up    { focus-window-up; }
+    Mod+Right { focus-column-right; }
+    Mod+A     { focus-column-left; }
+    Mod+S     { focus-window-or-workspace-down; }
+    Mod+W     { focus-window-or-workspace-up; }
+    Mod+D     { focus-column-right; }
+
+    Alt+Left  { move-column-left; }
+    Alt+Down  { move-window-down; }
+    Alt+Up    { move-window-up; }
+    Alt+Right { move-column-right; }
+    Alt+A     { move-column-left; }
+    Alt+S     { move-window-down; }
+    Alt+W     { move-window-up; }
+    Alt+D     { move-column-right; }
+
+    Mod+Home { focus-column-first; }
+    Mod+End  { focus-column-last; }
+    Alt+Home { move-column-to-first; }
+    Alt+End  { move-column-to-last; }
+
+    Mod+WheelScrollDown      cooldown-ms=150 { focus-workspace-down; }
+    Mod+WheelScrollUp        cooldown-ms=150 { focus-workspace-up; }
+    Mod+Ctrl+WheelScrollDown cooldown-ms=150 { move-column-to-workspace-down; }
+    Mod+Ctrl+WheelScrollUp   cooldown-ms=150 { move-column-to-workspace-up; }
+
+    Mod+WheelScrollRight      { focus-column-right; }
+    Mod+WheelScrollLeft       { focus-column-left; }
+    Mod+Ctrl+WheelScrollRight { move-column-right; }
+    Mod+Ctrl+WheelScrollLeft  { move-column-left; }
+
+    // horizontal scrolling on shift
+    Mod+Shift+WheelScrollDown      { focus-column-right; }
+    Mod+Shift+WheelScrollUp        { focus-column-left; }
+    Mod+Ctrl+Shift+WheelScrollDown { move-column-right; }
+    Mod+Ctrl+Shift+WheelScrollUp   { move-column-left; }
+
+    //Mod+TouchpadScrollDown { spawn "wpctl" "set-volume" "@DEFAULT_AUDIO_SINK@" "0.02+"; }
+    //Mod+TouchpadScrollUp   { spawn "wpctl" "set-volume" "@DEFAULT_AUDIO_SINK@" "0.02-"; }
+
+    Mod+1 { focus-workspace 1; }
+    Mod+2 { focus-workspace 2; }
+    Mod+3 { focus-workspace 3; }
+    Mod+4 { focus-workspace 4; }
+    Mod+5 { focus-workspace 5; }
+    Mod+6 { focus-workspace 6; }
+    Mod+7 { focus-workspace 7; }
+    Mod+8 { focus-workspace 8; }
+    Mod+9 { focus-workspace 9; }
+    Alt+1 { move-window-to-workspace 1; }
+    Alt+2 { move-window-to-workspace 2; }
+    Alt+3 { move-window-to-workspace 3; }
+    Alt+4 { move-window-to-workspace 4; }
+    Alt+5 { move-window-to-workspace 5; }
+    Alt+6 { move-window-to-workspace 6; }
+    Alt+7 { move-window-to-workspace 7; }
+    Alt+8 { move-window-to-workspace 8; }
+    Alt+9 { move-window-to-workspace 9; }
+
+    Alt+Q { set-column-width "-10%"; }
+    Alt+E { set-column-width "+10%"; }
+    Mod+R { maximize-column; }
+    Mod+Shift+R { fullscreen-window; }
+
+    /////////////////////
+    // HMM //////////////
+    /////////////////////
+    Mod+BracketLeft  { consume-or-expel-window-left; }
+    Mod+BracketRight { consume-or-expel-window-right; }
+    Mod+M { toggle-column-tabbed-display; }
+    Mod+N repeat=false { toggle-overview; }
+
+    // Mod+C { center-column; }
+    // Mod+Ctrl+C { center-visible-columns; }
+
+    // Mod+Shift+Minus { set-window-height "-10%"; }
+    // Mod+Shift+Equal { set-window-height "+10%"; }
+
+    // Mod+V       { toggle-window-floating; }
+    // Mod+Shift+V { switch-focus-between-floating-and-tiling; }
+
+    // currently using slurp and grim
+    Print { screenshot; }
+
+    Mod+Escape allow-inhibiting=false { toggle-keyboard-shortcuts-inhibit; }
+    Ctrl+Alt+Delete { quit; }
+}
+
+window-rule {
+    geometry-corner-radius 10 // rounded corners
+    clip-to-geometry true
+}
+
+window-rule {
+    match app-id="firefox"
+    open-maximized true
+    open-on-workspace "browser"
+}
+
+window-rule {
+    match app-id="chromium"
+    open-maximized true
+    open-on-workspace "browser"
+}
+
+window-rule {
+    match app-id="dev.zed.Zed-Previe"
+    open-maximized true
+    open-on-workspace "text"
+}
+
+window-rule {
+    match app-id="darktable"
+    open-maximized true
+}
+
+window-rule {
+    match app-id="gimp-3.0"
+    open-maximized true
+}
+
+window-rule {
+   match is-focused=false
+   opacity 0.97
+}
+
+window-rule {
+    //tofi
+    //    default-floating-position x=10 y=10 relative-to="bottom-right"
+
+}

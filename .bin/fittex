@@ -1,4 +1,0 @@
-#!/bin/sh
-cd
-file="$(fzf --reverse)" && [ -f "$file" ]
-dtach -n /tmp/$(cat /proc/sys/kernel/random/uuid) xdg-open "$file"
