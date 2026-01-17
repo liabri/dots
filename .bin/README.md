@@ -6,14 +6,8 @@
 
 **exists:** well, does it exists ? currently supports glyph lookup in fonts
 
-**fuzzel-cal:** a fuzzel-based calendar
-
-**kb:** changing kb layout using xkb and ankra
-
 **lwien:** print terminal colours
 
 **psrc:** list packages of remote repos (arch currently, both official and AUR)
-
-**wp:** changes the background to a randomly selected wallpaper
 
 **xlewn:** colour pipette using grim, slurp and imagemagick

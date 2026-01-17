@@ -1,0 +1,36 @@
+// Zed settings
+//
+// For information on how to configure Zed, see the Zed
+// documentation: https://zed.dev/docs/configuring-zed
+//
+// To see all of Zed's default settings without changing your
+// custom settings, run `zed: open default settings` from the
+// command palette (cmd-shift-p / ctrl-shift-p)
+{
+    "cursor_shape": "bar",
+    "auto_update": false,
+    "buffer_line_height": {
+        "custom": 1.6,
+    },
+    "buffer_font_weight": 400.0,
+    "buffer_font_family": ".ZedMono",
+    "restore_on_startup": "last_workspace",
+    "on_last_window_closed": "quit_app",
+    "when_closing_with_no_tabs": "keep_window_open",
+    "icon_theme": "Zed (Default)",
+    "telemetry": {
+        "diagnostics": false,
+        "metrics": false,
+    },
+    "session": {
+        "trust_all_worktrees": true,
+    },
+    "base_keymap": "SublimeText",
+    "ui_font_size": 16,
+    "buffer_font_size": 15.0,
+    "tab_size": 4,
+    "hard_tabs": false,
+    "soft_wrap": "editor_width",
+    "use_autoclose": false,
+    "theme": "Zed Legacy: Atelier Plateau Dark",
+}
