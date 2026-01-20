@@ -1,5 +1,5 @@
 # dots
-A collection of my dotfiles & scripts
+A collection of my dotfiles & scripts for NixOS
 
 ## config packages used
 
@@ -7,4 +7,4 @@ ankra btop fastfetch fontconfig fontconfig foot gtk imv mpd rofi sublime sway te
 
 ## scripts packages used
 
-ImageMagick grim slurp wl-record wl-copy mpc dtach tar unzip unrar p7zip gzip bzip2 
+ImageMagick grim slurp wl-record wl-copy mpc dtach tar unzip unrar p7zip gzip bzip2
