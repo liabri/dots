@@ -1,45 +1,47 @@
-export PATH="$(find ~/.bin/ -maxdepth 1 -type d | sed 's|/$||'| tr '\n' ':')$PATH"
+# add ~/.local/share/.bin to path
+export PATH="$(find ~/.local/share/.bin/ -maxdepth 1 -type d | sed 's|/$||'| tr '\n' ':')$PATH"
+
+# add cargo to path
+[ -r ~/.cargo/env ] && . ~/.cargo/env
 
 # xdg
 export XDG_DESKTOP_DIR="$HOME/.local/share"
-export XDG_DOCUMENTS_DIR="$HOME/dokumenti"
+export XDG_DOCUMENTS_DIR="$HOME/documents"
 export XDG_DOWNLOAD_DIR="$HOME/minzel"
-export XDG_MUSIC_DIR="$HOME/muzika"
-export XDG_VIDEOS_DIR="$HOME/film"
-export XDG_PICTURES_DIR="$HOME/ritratti"
-export XDG_SCREENSHOTS_DIR="$XDG_PICTURES_DIR/fotoskermi"
-export XDG_RECORDINGS_DIR="$XDG_VIDEOS_DIR/cqieli"
-export XDG_PUBLICSHARE_DIR="$HOME/pubbliku"
-export XDG_TEMPLATES_DIR="$HOME/.config/mudelli.tal-filzi"
+export XDG_MUSIC_DIR="$HOME/music"
+export XDG_VIDEOS_DIR="$HOME/videos"
+export XDG_PICTURES_DIR="$HOME/pictures"
+export XDG_SCREENSHOTS_DIR="$XDG_PICTURES_DIR/screenshots"
+export XDG_RECORDINGS_DIR="$XDG_VIDEOS_DIR/recordings"
+export XDG_PUBLICSHARE_DIR="$HOME/public"
+export XDG_TEMPLATES_DIR="$HOME/.config/templates"
 export XDG_VIDEOS_DIR="$HOME/videos"
 export XDG_CONFIG_HOME="$HOME/.config"
 export XDG_CACHE_HOME="$HOME/.cache"
 export XDG_DATA_HOME="$HOME/.local/share"
 export XDG_STATE_HOME="$HOME/.local/state"
 
-# locale
-export LANG="en_US.utf8"
-export LC_CTYPE="en_US.utf8"
-export LC_NUMERIC="en_US.utf8"
-export LC_TIME="en_US.utf8"
-export LC_COLLATE="en_US.utf8"
-export LC_MONETARY="en_US.utf8"
-export LC_MESSAGES="en_US.utf8"
-export LC_PAPER="en_US.utf8"
-export LC_NAME="en_US.utf8"
-export LC_ADDRESS="en_US.utf8"
-export LC_TELEPHONE="en_US.utf8"
-export LC_MEASUREMENT="en_US.utf8"
-export LC_IDENTIFICATION="en_US.utf8"
-export LC_ALL="en_US.utf8"
+# --- SSH Agent Setup (POSIX shell) ---
+SSH_ENV="$HOME/.ssh/agent_env"
 
-# temporary for wayland
-export MOZ_ENABLE_WAYLAND=1
-export SDL_VIDEODRIVER=wayland
+# function to start a new ssh-agent
+start_agent() {
+    echo "Starting new ssh-agent..."
+    eval "$(ssh-agent -s)" >/dev/null
+    printf 'SSH_AUTH_SOCK=%s\nSSH_AGENT_PID=%s\n' "$SSH_AUTH_SOCK" "$SSH_AGENT_PID" > "$SSH_ENV"
+    chmod 600 "$SSH_ENV"
+}
 
-# user-wide ssh agent magic
-export SSH_AUTH_SOCK=$HOME/.ssh/ssh_agent.sock
-ssh-add -l 2>/dev/null >/dev/null
-if [ $? -ge 2 ]; then
-  ssh-agent -a "$SSH_AUTH_SOCK" >/dev/null
+# load existing agent if available
+if [ -f "$SSH_ENV" ]; then
+    . "$SSH_ENV"
+    # check if agent is alive
+    if [ -n "$SSH_AGENT_PID" ] && kill -0 "$SSH_AGENT_PID" 2>/dev/null; then
+        :
+    else
+        start_agent
+    fi
+else
+    start_agent
 fi
+# --- End SSH Agent Setup ---

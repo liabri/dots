@@ -10,7 +10,7 @@ alias free="free -m"                    # show sizes in MB
 alias feo="fastfetch"
 alias doc="zathura --fork"
 
-# pass
+# pass shorthand
 pass(){ [[ "$1" == "otp" ]] && shift && command pass otp -c "$@" || ([[ "$1" == "-c" || "$1" == "--clip" ]] && command pass "$@" || command pass -c "$@"); }
 
 # git
@@ -29,69 +29,31 @@ alias rebuild="sudo nixos-rebuild switch --flake /etc/nixos#liabri"     # rebuil
 alias rebuild-test="sudo nixos-rebuild test --flake /etc/nixos#liabri"  # rebuild system w/o boot entry
 alias nixcon="sudo nano /etc/nixos/configuration.nix"                   # edit /etc/nixos/configuration.nix
 alias flake="sudo nano /etc/nixos/flake.nix"                            # edit /etc/nixos/flake.nix
+alias src="nix search nixpkgs"                                          # search nixpkgs
 
+# temporary session profile, reset on reboot via systemd. piggybacking off nix's profile-based pkgs
+export PATH="$HOME/.cache/nix-session/wrappers:$PATH"
 function ins() {
     if [ -z "$1" ]; then echo "Usage: ins <package>"; return 1; fi
 
-    local SESSION_PROF="$HOME/.local/state/nix/profiles/session" # installation location
-    local WRAPPERS_DIR="$HOME/.cache/nix-session/wrappers" # wrapper scripts defining XDG vars for the binaries
-    local BEFORE="" # binaries before install
-    if [ -d "$SESSION_PROF/bin" ]; then
-        for f in "$SESSION_PROF/bin"/*; do
-            [ -f "$f" ] && BEFORE="$BEFORE $(basename "$f")"
-        done
-    fi
+    SESSION_PROF="$HOME/.local/state/nix/profiles/session";
+    WRAPPERS_DIR="$HOME/.cache/nix-session/wrappers";
+    D="$HOME/.cache/nix-session"
 
-    mkdir -p "$WRAPPERS_DIR" \
-             "$HOME/.cache/nix-session/config" \
-             "$HOME/.cache/nix-session/data" \
-             "$HOME/.cache/nix-session/cache"
+    mkdir -p "$WRAPPERS_DIR" "$D/config" "$D/data" "$D/cache"
 
-    nix profile add "nixpkgs#$1" --profile "$SESSION_PROF" # install package to #SESSION_PROF
+    BEFORE=$(ls "$SESSION_PROF/bin" 2>/dev/null)
+    export NIXPKGS_ALLOW_UNFREE=1
+    nix profile add "nixpkgs#$1" --profile "$SESSION_PROF"
 
-    BEFORE="${BEFORE:- }"
-    local AFTER="" # binaries after install
-    for f in "$SESSION_PROF/bin"/*; do
-        [ -f "$f" ] && AFTER="$AFTER $(basename "$f")"
+    for bin in $(ls "$SESSION_PROF/bin"); do
+        case " $BEFORE " in *" $bin "*) continue;; esac
+        printf '#!/bin/sh\nexport XDG_CONFIG_HOME="%s/config" XDG_DATA_HOME="%s/data" XDG_CACHE_HOME="%s/cache"\nexec "%s/bin/%s" "$@"' "$D" "$D" "$D" "$SESSION_PROF" "$bin" > "$WRAPPERS_DIR/$bin"
+        chmod +x "$WRAPPERS_DIR/$bin"
     done
-    # local NEW_BINS=$(echo "$AFTER" | grep -Fxv -f <(echo "$BEFORE")) # new binaries from installation
-    local NEW_BINS=""
-    for bin in $AFTER; do
-        FOUND=0
-        for b in $BEFORE; do
-            [ "$bin" = "$b" ] && FOUND=1
-        done
-        [ $FOUND -eq 0 ] && NEW_BINS="$NEW_BINS $bin"
-    done
-
-    # create wrappers only for new binaries
-    for bin in $NEW_BINS; do
-        local BIN_PATH="$SESSION_PROF/bin/$bin"
-        local WRAPPER="$WRAPPERS_DIR/$bin"
-
-        cat > "$WRAPPER" <<EOF
-#!/bin/sh
-export XDG_CONFIG_HOME="$HOME/.cache/nix-session/config"
-export XDG_DATA_HOME="$HOME/.cache/nix-session/data"
-export XDG_CACHE_HOME="$HOME/.cache/nix-session/cache"
-exec "$BIN_PATH" "\$@"
-EOF
-        chmod +x "$WRAPPER"
-    done
-
-    # add wrapper directory to PATH if not already
-    case ":$PATH:" in
-        *":$WRAPPERS_DIR:"*) ;;
-        *) export PATH="$WRAPPERS_DIR:$PATH" ;;
-    esac
-
-    echo "✅ '$1' is now available in this session."
-    echo "all configs/data/caches go to ~/.cache/nix-session/"
 }
 
-# add packages installed thru ins() to PATH of future shells
-export PATH="$HOME/.cache/nix-session/wrappers:$PATH"
-
+# nice colours and username escape
 export PS1=\
 '\fm.${LOGNAME} '\
 '\fw.${{{PWD:/~/\~}##*/}:-$PWD}'\
@@ -105,7 +67,7 @@ HISTFILE=${XDG_CACHE_HOME}/yash_history HISTSIZE=5000
 sh() { yash --posix "$@"; }
 yash() { command yash "$@"; }
 
-
+# colours
 if [ "$TERM" = "linux" ]; then
     echo -en "\e]P0000000" #black
     echo -en "\e]P8918f8f" #darkgrey
@@ -125,5 +87,3 @@ if [ "$TERM" = "linux" ]; then
     echo -en "\e]PFdaddee" #white
     clear #for background artifacting
 fi
-
-[ -r ~/.cargo/env ] && . ~/.cargo/env
