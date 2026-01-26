@@ -1,4 +1,0 @@
-#!/bin/bash
-TEXT="(っ˘з(˘⌣˘ ) ♡"
-printf '%s' "$TEXT" | xclip -i -selection clipboard
-xdotool key --clearmodifiers "ctrl+v"

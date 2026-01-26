@@ -1,7 +1,0 @@
-#!/bin/sh
-
-pkill picom
-pkill polybar
-pkill sxhkd
-pkill dunst
-bspc wm -r
