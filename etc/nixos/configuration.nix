@@ -1,4 +1,4 @@
-{ config, pkgs, awww, ... }:
+{ config, pkgs, stable, awww, ... }:
 
 {
   imports =
@@ -38,11 +38,22 @@
   boot.extraModulePackages = [ config.boot.kernelPackages.rtl8812au ];
   boot.kernelModules = [ "8812au" ];
 
-  networking.hostName = "nixos";
+  networking.hostName = "venus";
   networking.networkmanager.enable = true;
   networking.nameservers = [ "1.1.1.1" "8.8.8.8" ];
 
- 
+  # dm
+  services.displayManager.ly.enable = true;
+
+  # compositor (niri)
+  services.displayManager.sessionPackages = [ pkgs.niri ];
+  systemd.packages = [ pkgs.niri ];
+  xdg.portal = {
+    enable = true;
+    extraPortals = [ pkgs.xdg-desktop-portal-gtk ]; # or xdg-desktop-portal-kde
+  };
+  xdg.portal.configPackages = [ pkgs.niri ];
+
   # sound
   security.rtkit.enable = true;
   services.pipewire = {
@@ -53,7 +64,9 @@
     jack.enable = true;
   };
 
-  
+  # ssh
+  services.openssh.enable = true;
+ 
   # shell
   users.defaultUserShell = pkgs.yash;
 
@@ -85,28 +98,38 @@
   # pkgs
   nixpkgs.config.allowUnfree = true;
   environment.systemPackages = with pkgs; [
-    foot
-    niri
-    git
-    zathura
-    zed-editor
-    fastfetch
-    unzip
-    thunar
-    steam
-    xwayland-satellite
-    tofi
-    mpv
-    eww
-    brightnessctl
-    ly
+    # basic
+    foot		# terminal
+    niri		# compositor
+    git			# git
+    zathura		# docs
+    zed-editor 		# editor
+    thunar 		# file manager
+    fuzzel  		# application launcher 
+    mpv 		# video player
+    swayimg		# image viewer
+    eww 		# widget
+    ly 			# display manager
+    firefox		# browser 		
+    (awww.packages.${pkgs.stdenv.hostPlatform.system}.awww) # wallpaper daemon
+ 
+    # tools
+    unzip		
+    xwayland-satellite	# xwayland support
+    brightnessctl	# brightness control
     curl
-    ncdu
-    (awww.packages.${pkgs.stdenv.hostPlatform.system}.awww)
-    clapboard
-    swayimg
-    ungoogled-chromium
-  ];
+    wl-clip-persist	# clipboard persists
+    ncdu		# filesystem info
+    fastfetch		# system info
+    btop		# system monitor
+    pass		# password manager
+    passExtensions.pass-otp # otp support for pass
+
+    # specialised software
+    steam
+    gimp
+    (stable.legacyPackages.x86_64-linux.freecad)
+ ];
 
 
   # vulkan
@@ -154,7 +177,8 @@
   systemd.tmpfiles.rules = [
     # R = Remove path on boot
     # Type  Path                                         Mode  User    Group   Age  Argument
-    "R      /home/liabri/.local/state/nix/profiles/session* -     -       -       -    -"
+    "R      /home/liabri/.local/state/nix/profiles/session -     -       -       -    -"
+    "R      /home/liabri/.cache/nix-session                -     -       -       -    -"
   ];
 
   # This value determines the NixOS release from which the default
