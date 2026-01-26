@@ -1,16 +1,16 @@
 workspace "browser"
 workspace "bloo"
-workspace "text"
+workspace "editor"
 workspace "chat"
 
-spawn-at-startup "waybar"
-spawn-at-startup "dunst"
-spawn-at-startup "swww-daemon"
+spawn-at-startup "awww-daemon"
+spawn-at-startup "wl-clip-persist" "--clipboard" "both"
+spawn-at-startup "exec .~/.config/aww/scripts/randomise_multi.sh '~/.local/share/wallpapers' 10"
 // spawn-at-startup "exec gsettings set org.gnome.desktop.interface icon-theme sage"
 
 prefer-no-csd // no client side decorations
 
-screenshot-path "/home/liabri/.local/share/fotoskermi/%Y%m%d%H%M%S.png"
+screenshot-path "/home/liabri/.local/share/screenshots/%Y%m%d%H%M%S.png"
 hotkey-overlay { skip-at-startup; }
 
 environment {
@@ -31,7 +31,7 @@ gestures {
 input {
     keyboard {
         xkb {
-            layout "bu"
+            file "~/.config/xkbcommon/bu.xkb"
         }
     }
 
@@ -48,6 +48,17 @@ input {
 
     warp-mouse-to-focus             // move pointer to the center of newly focused windows
     focus-follows-mouse max-scroll-amount="95%";
+}
+
+output "DVI-D-1" {
+    mode "1920x1080@144.001"
+    focus-at-startup
+    position x=1920 y=0
+}
+
+output "HDMI-A-3" {
+    mode "1920x1080@60.000"
+    position x=0 y=0
 }
 
 layout {
@@ -85,7 +96,7 @@ binds {
     Mod+T hotkey-overlay-title="open a terminal: foot" { spawn "foot"; }
     Mod+E hotkey-overlay-title="open an application launcher: fuzzel" { spawn "fuzzel"; }
     Mod+K hotkey-overlay-title="open a calendar: fuzzel-cal" { spawn "fuzzel-cal"; }
-    Mod+F hotkey-overlay-title="open a browser: chromium" { spawn "chromium" "--ozone-platform=wayland"; }
+    Mod+F hotkey-overlay-title="open a browser: firefox" { spawn "firefox"; }
     Mod+G hotkey-overlay-title="open discord: webcord" { spawn "webcord"; }
     Mod+V hotkey-overlay-title="open a file manager: thunar" { spawn "thunar"; }
     Mod+O hotkey-overlay-title="open a text editor: zed" { spawn "zeditor"; }
@@ -114,56 +125,39 @@ binds {
 
     // layout
     Mod+Q allow-inhibiting=false { close-window; }
-    Mod+Left  { focus-column-left; }
     Mod+Down  { focus-window-down; }
     Mod+Up    { focus-window-up; }
     Mod+Right { focus-column-right; }
-    Mod+A     { focus-column-left; }
+    Mod+A     { focus-column-or-monitor-left; }
     Mod+S     { focus-window-or-workspace-down; }
     Mod+W     { focus-window-or-workspace-up; }
-    Mod+D     { focus-column-right; }
-
-    Alt+A     { move-column-left; }
-    Alt+S     { move-window-down; }
-    Alt+W     { move-window-up; }
-    Alt+D     { move-column-right; }
-
-    Mod+Home { focus-column-first; }
-    Mod+End  { focus-column-last; }
-    Alt+Home { move-column-to-first; }
-    Alt+End  { move-column-to-last; }
-
+    Mod+D     { focus-column-or-monitor-right; }
     Mod+WheelScrollDown      cooldown-ms=150 { focus-workspace-down; }
     Mod+WheelScrollUp        cooldown-ms=150 { focus-workspace-up; }
-    Mod+Ctrl+WheelScrollDown cooldown-ms=150 { move-column-to-workspace-down; }
-    Mod+Ctrl+WheelScrollUp   cooldown-ms=150 { move-column-to-workspace-up; }
 
-    Mod+WheelScrollRight      { focus-column-right; }
-    Mod+WheelScrollLeft       { focus-column-left; }
-    Mod+Ctrl+WheelScrollRight { move-column-right; }
-    Mod+Ctrl+WheelScrollLeft  { move-column-left; }
+    Alt+A     { move-column-left-or-to-monitor-left; }
+    Alt+D     { move-column-right-or-to-monitor-right; }
 
-    // horizontal scrolling on shift
-    Mod+Shift+WheelScrollDown      { focus-column-right; }
-    Mod+Shift+WheelScrollUp        { focus-column-left; }
-    Mod+Ctrl+Shift+WheelScrollDown { move-column-right; }
-    Mod+Ctrl+Shift+WheelScrollUp   { move-column-left; }
+    Alt+W    { move-workspace-up; }
+    Alt+S  { move-workspace-down; }
 
-    //Mod+TouchpadScrollDown { spawn "wpctl" "set-volume" "@DEFAULT_AUDIO_SINK@" "0.02+"; }
-    //Mod+TouchpadScrollUp   { spawn "wpctl" "set-volume" "@DEFAULT_AUDIO_SINK@" "0.02-"; }
+    // Mod = focusing, incl. intra monitor (meaning intra workspace. Therefore, if nothing to go left, or right, then go to next monitor!!!
+    // Alt = move windows 1 slot in the direction aiming, if it is on another workspace, then move to it (monitor too)
+    // intra workspace window movement = Alt+Shift
 
-    Mod+1 { focus-workspace 1; }
-    Mod+2 { focus-workspace 2; }
-    Mod+3 { focus-workspace 3; }
+
+    Mod+1 { focus-workspace "browser"; }
+    Mod+2 { focus-workspace "bloo"; }
+    Mod+3 { focus-workspace "editor"; }
     Mod+4 { focus-workspace 4; }
     Mod+5 { focus-workspace 5; }
     Mod+6 { focus-workspace 6; }
     Mod+7 { focus-workspace 7; }
     Mod+8 { focus-workspace 8; }
     Mod+9 { focus-workspace 9; }
-    Alt+1 { move-window-to-workspace 1; }
-    Alt+2 { move-window-to-workspace 2; }
-    Alt+3 { move-window-to-workspace 3; }
+    Alt+1 { move-window-to-workspace "browser"; }
+    Alt+2 { move-window-to-workspace "bloo"; }
+    Alt+3 { move-window-to-workspace "editor"; }
     Alt+4 { move-window-to-workspace 4; }
     Alt+5 { move-window-to-workspace 5; }
     Alt+6 { move-window-to-workspace 6; }
@@ -179,6 +173,23 @@ binds {
     /////////////////////
     // HMM //////////////
     /////////////////////
+    Mod+Home { focus-column-first; }
+    Mod+End  { focus-column-last; }
+    Alt+Home { move-column-to-first; }
+    Alt+End  { move-column-to-last; }
+
+    Mod+WheelScrollRight      { focus-column-right; }
+    Mod+WheelScrollLeft       { focus-column-left; }
+    Mod+Ctrl+WheelScrollRight { move-column-right; }
+    Mod+Ctrl+WheelScrollLeft  { move-column-left; }
+    // horizontal scrolling on shift
+    Mod+Shift+WheelScrollDown      { focus-column-right; }
+    Mod+Shift+WheelScrollUp        { focus-column-left; }
+    Mod+Ctrl+Shift+WheelScrollDown { move-column-right; }
+    Mod+Ctrl+Shift+WheelScrollUp   { move-column-left; }
+
+
+
     Mod+BracketLeft  { consume-or-expel-window-left; }
     Mod+BracketRight { consume-or-expel-window-right; }
     Mod+M { toggle-column-tabbed-display; }
@@ -193,7 +204,6 @@ binds {
     // Mod+V       { toggle-window-floating; }
     // Mod+Shift+V { switch-focus-between-floating-and-tiling; }
 
-    // currently using slurp and grim
     Print { screenshot; }
 
     Mod+Escape allow-inhibiting=false { toggle-keyboard-shortcuts-inhibit; }

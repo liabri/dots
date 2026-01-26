@@ -1,0 +1,8 @@
+[Default Applications]
+x-scheme-handler/mailto=chromium-browser.desktop
+application/octet-stream=dev.zed.Zed.desktop
+
+[Added Associations]
+image/png=swayimg.desktop;
+image/jpeg=org.pwmt.zathura-pdf-mupdf.desktop;swayimg.desktop;
+application/octet-stream=dev.zed.Zed.desktop;

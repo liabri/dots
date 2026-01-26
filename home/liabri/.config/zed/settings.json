@@ -7,6 +7,8 @@
 // custom settings, run `zed: open default settings` from the
 // command palette (cmd-shift-p / ctrl-shift-p)
 {
+    "use_on_type_format": false,
+    "extend_comment_on_newline": false,
     "cursor_shape": "bar",
     "auto_update": false,
     "buffer_line_height": {
@@ -15,6 +17,7 @@
     "buffer_font_weight": 400.0,
     "buffer_font_family": ".ZedMono",
     "restore_on_startup": "last_workspace",
+    "format_on_save": "off",
     "on_last_window_closed": "quit_app",
     "when_closing_with_no_tabs": "keep_window_open",
     "icon_theme": "Zed (Default)",
