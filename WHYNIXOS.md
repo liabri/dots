@@ -1,0 +1,4 @@
+# why nixos?
+i adopted nixos for its practical, declarative minimalism. i want the control and simplicity of arch, but with reproducibility, atomic upgrades, and rollback for both system and user packages. instead of chasing every system change manually, i declare my system’s desired state in configuration.nix, while keeping the freedom to tweak user-level configs on the fly. immediate feedback meets personal flexibility.
+
+i like the declarative approach—but opaque modules like programs.niri.enable frustrate me. i don’t want black boxes; my configuration.nix should reflect exactly what runs. systemd’s inherent complexity and opacity reinforce this problem, making full transparency difficult. i’m therefore keeping a close eye on systemd-free nix derivates like finix and sixos, which may offer the minimalism and clarity i’m after without compromise.
