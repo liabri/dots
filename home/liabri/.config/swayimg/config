@@ -1,0 +1,184 @@
+# Swayimg configuration file.
+
+
+[general]
+mode = viewer
+decoration = no
+sigusr1 = reload
+sigusr2 = next_file
+app_id = swayimg
+
+[viewer]
+window = #00000000
+transparency = grid
+scale = optimal
+position = center
+# Anti-aliasing mode (none/box/bilinear/bicubic/mks13)
+antialiasing = mks13
+loop = no
+history = 10
+preload = 2
+
+[slideshow]
+time = 3
+window = auto
+transparency = #000000ff
+scale = optimal
+position = center
+antialiasing = mks13
+
+[gallery]
+size = 200
+cache = 100
+preload = no
+pstore = no
+fill = yes
+antialiasing = mks13
+window = #00000000
+background = #202020ff
+select = #404040ff
+border = #000000ff
+shadow = #000000ff
+
+[list]
+order = alpha
+reverse = no
+recursive = no
+all = no
+fsmon = yes
+
+[font]
+name = Fira Mono
+size = 10
+color = #ccccccff
+shadow = #000000d0
+background = #00000000
+
+[info]
+show = no
+info_timeout = 5
+status_timeout = 3
+
+[info.viewer]
+top_left = +name,+format,+filesize,+imagesize,+exif
+top_right = index
+bottom_left = scale,frame
+bottom_right = status
+
+[info.slideshow]
+top_left = none
+top_right = none
+bottom_left = none
+bottom_right = dir,status
+
+[info.gallery]
+top_left = none
+top_right = index
+bottom_left = none
+bottom_right = name,status
+
+[keys.viewer]
+F1 = help
+Home = first_file
+End = last_file
+Prior = prev_file
+Next = next_file
+Space = next_file
+Shift+r = rand_file
+Shift+d = prev_dir
+a = prev_file
+d = next_file
+Shift+o = prev_frame
+o = next_frame
+c = skip_file
+s = mode slideshow
+n = animation
+f = fullscreen
+Return = mode gallery
+Left = prev_file
+Right = next_file
+Up = step_up 10
+Down = step_down 10
+Equal = zoom +10
+Plus = zoom +10
+Minus = zoom -10
+w = zoom width
+Shift+w = zoom height
+z = zoom fit
+Shift+z = zoom fill
+0 = zoom real
+BackSpace = zoom optimal
+k = zoom keep
+Alt+s = zoom
+bracketleft = rotate_left
+bracketright = rotate_right
+m = flip_vertical
+Shift+m = flip_horizontal
+h = antialiasing
+r = reload
+i = info
+Shift+Delete = exec rm -f '%' && echo "File removed: %"; skip_file
+Escape = exit
+q = exit
+# Mouse related
+ScrollLeft = step_right 5
+ScrollRight = step_left 5
+ScrollUp = step_up 5
+ScrollDown = step_down 5
+Ctrl+ScrollUp = zoom +10
+Ctrl+ScrollDown = zoom -10
+Shift+ScrollUp = prev_file
+Shift+ScrollDown = next_file
+Alt+ScrollUp = prev_frame
+Alt+ScrollDown = next_frame
+MouseLeft = drag
+MouseSide = prev_file
+MouseExtra = next_file
+
+[keys.slideshow]
+F1 = help
+Home = first_file
+End = last_file
+Prior = prev_file
+Next = next_file
+Shift+r = rand_file
+Shift+d = prev_dir
+d = next_dir
+Space = pause
+i = info
+f = fullscreen
+Return = mode
+Escape = exit
+q = exit
+
+[keys.gallery]
+F1 = help
+Home = first_file
+End = last_file
+Left = step_left
+Right = step_right
+Up = step_up
+Down = step_down
+Prior = page_up
+Next = page_down
+c = skip_file
+s = mode slideshow
+f = fullscreen
+Return = mode viewer
+a = antialiasing
+r = reload
+i = info
+Equal = thumb +20
+Plus = thumb +20
+Minus = thumb -20
+Shift+Delete = exec rm -f '%' && echo "File removed: %"; skip_file
+Escape = exit
+q = exit
+# Mouse related
+ScrollLeft = step_right
+ScrollRight = step_left
+ScrollUp = step_up
+ScrollDown = step_down
+Ctrl+ScrollUp = thumb +20
+Ctrl+ScrollDown = thumb -20
+MouseLeft = mode viewer
