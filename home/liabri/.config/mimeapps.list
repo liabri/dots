@@ -1,8 +1,54 @@
 [Default Applications]
-x-scheme-handler/mailto=chromium-browser.desktop
+# The Catch-All
 application/octet-stream=dev.zed.Zed.desktop
 
-[Added Associations]
-image/png=swayimg.desktop;
-image/jpeg=org.pwmt.zathura-pdf-mupdf.desktop;swayimg.desktop;
-application/octet-stream=dev.zed.Zed.desktop;
+# Web & System
+text/html=firefox.desktop
+x-scheme-handler/http=firefox.desktop
+x-scheme-handler/https=firefox.desktop
+x-scheme-handler/about=firefox.desktop
+x-scheme-handler/unknown=firefox.desktop
+
+# File Management
+inode/directory=thunar.desktop
+
+# Zed Editor
+text/plain=dev.zed.Zed.desktop
+text/markdown=dev.zed.Zed.desktop
+application/json=dev.zed.Zed.desktop
+text/x-shellscript=dev.zed.Zed.desktop
+
+# Swayimg
+image/png=swayimg.desktop
+image/jpeg=swayimg.desktop
+image/gif=swayimg.desktop
+image/webp=swayimg.desktop
+
+# Inkscape (Vector Graphics)
+image/svg+xml=org.inkscape.Inkscape.desktop
+application/vnd.corel-draw=org.inkscape.Inkscape.desktop
+image/x-eps=org.inkscape.Inkscape.desktop
+
+# GIMP (Specialized Graphics)
+image/x-xcf=gimp.desktop
+image/vnd.adobe.photoshop=gimp.desktop
+
+# Zathura
+application/pdf=org.pwmt.zathura-pdf-mupdf.desktop
+
+# FreeCAD (3D/CAD)
+application/x-extension-fcstd=FreeCAD.desktop
+model/step=FreeCAD.desktop
+model/iges=FreeCAD.desktop
+application/x-freecad=FreeCAD.desktop
+
+# KiCad (Electronics/PCB Design)
+application/x-kicad-schematic=kicad.desktop
+application/x-kicad-pcb=kicad.desktop
+application/x-kicad-project=kicad.desktop
+
+# Media & Archives
+video/mp4=mpv.desktop
+video/x-matroska=mpv.desktop
+application/zip=thunar-archive-manager.desktop
+application/x-tar=thunar-archive-manager.desktop

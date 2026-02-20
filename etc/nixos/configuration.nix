@@ -20,11 +20,13 @@
     };
   };
 
+  boot.blacklistedKernelModules = [ "i915" "nouveau" ];
   boot.kernelParams = [
     "intel_iommu=on" # fixes the DMAR BIOS error
     "igfx_off" # disables integrated graphics
   
     "nvidia-drm.modeset=1" # ensures NVIDIA plays nice
+    "nvidia_drm.fbdev=1"
     "nvidia.NVreg_PreserveVideoMemoryAllocations=1" # ensures NVIDIA plays nice
 
     # to deal with my NVMe running thru a PCIe adapter on PCIe 2.0 lane on a Z87
@@ -94,14 +96,12 @@
     packages = with pkgs; [];
   };
 
-
   # pkgs
   nixpkgs.config.allowUnfree = true;
   environment.systemPackages = with pkgs; [
     # basic
     foot		# terminal
     niri		# compositor
-    git			# git
     zathura		# docs
     zed-editor 		# editor
     thunar 		# file manager
@@ -111,6 +111,7 @@
     eww 		# widget
     ly 			# display manager
     firefox		# browser 		
+    webcord 		# discord
     (awww.packages.${pkgs.stdenv.hostPlatform.system}.awww) # wallpaper daemon
  
     # tools
@@ -119,16 +120,24 @@
     brightnessctl	# brightness control
     curl
     wl-clip-persist	# clipboard persists
+    wl-clipboard 	# wl-copy and wl-paste
     ncdu		# filesystem info
     fastfetch		# system info
     btop		# system monitor
-    pass		# password manager
-    passExtensions.pass-otp # otp support for pass
+    (pass.withExtensions (exts: [ exts.pass-otp ]))
+    git 		# git
+    git-lfs 		# git for big files
+    gnupg 		# gpg keys
+    pinentry-curses	# password prompt
+
+    # env
+    javaPackages.compiler.temurin-bin.jre-21
 
     # specialised software
     steam
     gimp
     (stable.legacyPackages.x86_64-linux.freecad)
+    prismlauncher
  ];
 
 
@@ -137,12 +146,14 @@
   services.xserver.videoDrivers = [ "nvidia" ];
   hardware.nvidia = {
     modesetting.enable = true;
+    powerManagement.enable = false; # often causes freezes
     open = false;
     nvidiaSettings = true;
     package = config.boot.kernelPackages.nvidiaPackages.stable;
   };
+  hardware.cpu.intel.updateMicrocode = true;
 
-  # MOVE TO .profile???
+
   environment.sessionVariables = {
     WLR_NO_HARDWARE_CURSORS = "1";
     LIBVA_DRIVER_NAME = "nvidia";

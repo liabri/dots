@@ -8,13 +8,13 @@ spawn-at-startup "wl-clip-persist" "--clipboard" "both"
 spawn-at-startup "exec .~/.config/aww/scripts/randomise_multi.sh '~/.local/share/wallpapers' 10"
 // spawn-at-startup "exec gsettings set org.gnome.desktop.interface icon-theme sage"
 
-prefer-no-csd // no client side decorations
+prefer-no-csd                                   // no client side decorations
 
 screenshot-path "/home/liabri/.local/share/screenshots/%Y%m%d%H%M%S.png"
 hotkey-overlay { skip-at-startup; }
 
 environment {
-    ELECTRON_OZONE_PLATFORM_HINT "auto" // for electron to run with wayland
+    ELECTRON_OZONE_PLATFORM_HINT "auto"         // for electron to run with wayland
 }
 
 cursor {
@@ -46,7 +46,7 @@ input {
         accel-profile "flat"
     }
 
-    warp-mouse-to-focus             // move pointer to the center of newly focused windows
+    warp-mouse-to-focus                         // move pointer to the center of newly focused windows
     focus-follows-mouse max-scroll-amount="95%";
 }
 
@@ -56,21 +56,21 @@ output "DVI-D-1" {
     position x=1920 y=0
 }
 
-output "HDMI-A-3" {
+output "HDMI-A-1" {
     mode "1920x1080@60.000"
     position x=0 y=0
 }
 
 layout {
     gaps 5
-    center-focused-column "never"   // focusing an off-screen column will keep at the left
+    center-focused-column "never"               // focusing an off-screen column will keep at the left
     default-column-width { proportion 0.5; }
     default-column-display "tabbed"
 
     struts { top 0; } // set to 40 to see waybar
 
     focus-ring {
-        // How many logical pixels the ring extends out from the windows.
+        // how many logical pixels the ring extends out from the windows.
         width 0
         active-color "rgba(20,20,20,1)"
         inactive-color "#505050"
@@ -102,16 +102,7 @@ binds {
     Mod+O hotkey-overlay-title="open a text editor: zed" { spawn "zeditor"; }
     Mod+grave hotkey-overlay-title="open a resource monitor: btop" { spawn "foot" "btop"; }
 
-    // kb layouts -- kb script doesnt work in niri
-    //Alt+Tab hotkey-overlay-title="kb alternate between zh bu" { spawn "kb" "zh"; }
-    //Alt+Grave hotkey-overlay-title="kb alternate between rs bu" { spawn "kb" "rs"; }
-
-    // screen capture
-    // Print+Shift hotkey-overlay-title="record a gif" { spawn "record" "-no" "gif"; }
-    // Print+Shift+Ctrl hotkey-overlay-title="record an mp4" { spawn "record" "-no" "mp4"; }
-
     // misc
-    Mod+P hotkey-overlay-title="change wallpaper: swww" { spawn "wp"; }
     Mod+L hotkey-overlay-title="Lock the Screen: swaylock" { spawn "swaylock"; }
 
     // volume
@@ -119,32 +110,27 @@ binds {
     XF86AudioLowerVolume allow-when-locked=true { spawn "wpctl" "set-volume" "@DEFAULT_AUDIO_SINK@" "0.1-"; } // sed -En 's/.*\[([0-9]+)%\].*/\1/p' | head -1 > $WOBSOCK
     XF86AudioMute allow-when-locked=true { spawn "wpctl" "set-mute" "@DEFAULT_AUDIO_SINK@" "toggle"; } // | sed -En '/\[on\]/ s/.*\[([0-9]+)%\].*/\1/ p; /\[off\]/ s/.*/0/p' | head -1 > $WOBSOCK
     XF86AudioMicMute allow-when-locked=true { spawn "wpctl" "set-mute" "@DEFAULT_AUDIO_SOURCE@" "toggle"; }
-
     XF86MonBrightnessDown allow-when-locked=true { spawn "brightnessctl" "s" "2%-"; }// | sed -En 's/.*\(([0-9]+)%\).*/\1/p' > $WOBSOCK
     XF86MonBrightnessUp allow-when-locked=true { spawn "brightnessctl" "s" "2%+"; }// | sed -En 's/.*\(([0-9]+)%\).*/\1/p' > $WOBSOCK
 
     // layout
     Mod+Q allow-inhibiting=false { close-window; }
-    Mod+Down  { focus-window-down; }
-    Mod+Up    { focus-window-up; }
-    Mod+Right { focus-column-right; }
-    Mod+A     { focus-column-or-monitor-left; }
-    Mod+S     { focus-window-or-workspace-down; }
-    Mod+W     { focus-window-or-workspace-up; }
-    Mod+D     { focus-column-or-monitor-right; }
+    Mod+A       { focus-column-or-monitor-left; }
+    Mod+S       { focus-window-or-workspace-down; }
+    Mod+W       { focus-window-or-workspace-up; }
+    Mod+D       { focus-column-or-monitor-right; }
+    Mod+Shift+A { focus-monitor-left; }
+    Mod+Shift+D { focus-monitor-right; }
+
     Mod+WheelScrollDown      cooldown-ms=150 { focus-workspace-down; }
     Mod+WheelScrollUp        cooldown-ms=150 { focus-workspace-up; }
 
-    Alt+A     { move-column-left-or-to-monitor-left; }
-    Alt+D     { move-column-right-or-to-monitor-right; }
-
-    Alt+W    { move-workspace-up; }
-    Alt+S  { move-workspace-down; }
-
-    // Mod = focusing, incl. intra monitor (meaning intra workspace. Therefore, if nothing to go left, or right, then go to next monitor!!!
-    // Alt = move windows 1 slot in the direction aiming, if it is on another workspace, then move to it (monitor too)
-    // intra workspace window movement = Alt+Shift
-
+    Alt+A       { move-column-left-or-to-monitor-left; }
+    Alt+D       { move-column-right-or-to-monitor-right; }
+    Alt+Shift+A { move-column-to-monitor-left; }
+    Alt+Shift+D { move-column-to-monitor-right; }
+    Alt+W       { move-window-up-or-to-workspace-up; }
+    Alt+S       { move-window-down-or-to-workspace-down; }
 
     Mod+1 { focus-workspace "browser"; }
     Mod+2 { focus-workspace "bloo"; }
@@ -169,40 +155,11 @@ binds {
     Alt+E { set-column-width "+10%"; }
     Mod+R { maximize-column; }
     Mod+Shift+R { fullscreen-window; }
-
-    /////////////////////
-    // HMM //////////////
-    /////////////////////
-    Mod+Home { focus-column-first; }
-    Mod+End  { focus-column-last; }
-    Alt+Home { move-column-to-first; }
-    Alt+End  { move-column-to-last; }
-
-    Mod+WheelScrollRight      { focus-column-right; }
-    Mod+WheelScrollLeft       { focus-column-left; }
-    Mod+Ctrl+WheelScrollRight { move-column-right; }
-    Mod+Ctrl+WheelScrollLeft  { move-column-left; }
-    // horizontal scrolling on shift
-    Mod+Shift+WheelScrollDown      { focus-column-right; }
-    Mod+Shift+WheelScrollUp        { focus-column-left; }
-    Mod+Ctrl+Shift+WheelScrollDown { move-column-right; }
-    Mod+Ctrl+Shift+WheelScrollUp   { move-column-left; }
-
-
-
-    Mod+BracketLeft  { consume-or-expel-window-left; }
-    Mod+BracketRight { consume-or-expel-window-right; }
-    Mod+M { toggle-column-tabbed-display; }
     Mod+Tab repeat=false { toggle-overview; }
 
-    // Mod+C { center-column; }
-    // Mod+Ctrl+C { center-visible-columns; }
-
-    // Mod+Shift+Minus { set-window-height "-10%"; }
-    // Mod+Shift+Equal { set-window-height "+10%"; }
-
-    // Mod+V       { toggle-window-floating; }
-    // Mod+Shift+V { switch-focus-between-floating-and-tiling; }
+    Mod+C { center-column; }
+    Mod+B       { toggle-window-floating; }
+    Mod+Shift+B { switch-focus-between-floating-and-tiling; }
 
     Print { screenshot; }
 
@@ -222,15 +179,9 @@ window-rule {
 }
 
 window-rule {
-    match app-id="chromium"
-    open-maximized true
-    open-on-workspace "browser"
-}
-
-window-rule {
     match app-id="dev.zed.Zed-Previe"
     open-maximized true
-    open-on-workspace "text"
+    open-on-workspace "editor"
 }
 
 window-rule {
@@ -251,5 +202,5 @@ window-rule {
 
 window-rule {
    match is-focused=false
-   opacity 0.97
+   opacity 0.98
 }
