@@ -1,0 +1,12 @@
+[Desktop Entry]
+Type=X-GNOME-Metatheme
+Name=Sage
+Comment=Sage Theme
+Encoding=UTF-8
+
+[X-GNOME-Metatheme]
+GtkTheme=Sage
+MetacityTheme=Sage
+IconTheme=Adwaita
+CursorTheme=Adwaita
+CursorSize=24

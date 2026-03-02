@@ -20,6 +20,12 @@ export XDG_CACHE_HOME="$HOME/.cache"
 export XDG_DATA_HOME="$HOME/.local/share"
 export XDG_STATE_HOME="$HOME/.local/state"
 
+# system stuff
+export WLR_NO_HARDWARE_CURSORS=1
+export LIBVA_DRIVER_NAME="nvidia"
+export MOZ_ENABLE_WAYLAND=1
+export GTK_THEME="sage"
+
 # --- SSH Agent Setup (POSIX shell) ---
 SSH_ENV="$HOME/.ssh/agent_env"
 
