@@ -1,46 +1,6 @@
 { config, pkgs, stable, awww, ... }:
 
 {
-  imports =
-    [ # Include the results of the hardware scan.
-      ./hardware-configuration.nix
-    ];
-
-  boot.loader = {
-    efi = {
-      canTouchEfiVariables = false;
-      efiSysMountPoint = "/boot";
-    };
-    grub = {
-      enable = true;
-      device = "nodev";
-      efiSupport = true;
-      useOSProber = true; # this detects windows on the same ssd
-      efiInstallAsRemovable = true; # this ensure the BIOS sees it as a standard bootable drive
-    };
-  };
-
-  boot.blacklistedKernelModules = [ "i915" "nouveau" ];
-  boot.kernelParams = [
-    "intel_iommu=on" # fixes the DMAR BIOS error
-    "igfx_off" # disables integrated graphics
-  
-    "nvidia-drm.modeset=1" # ensures NVIDIA plays nice
-    "nvidia_drm.fbdev=1"
-    "nvidia.NVreg_PreserveVideoMemoryAllocations=1" # ensures NVIDIA plays nice
-
-    # to deal with my NVMe running thru a PCIe adapter on PCIe 2.0 lane on a Z87
-    "nvme_core.io_timeout=255" # increase kernel wait time for NVMe response
-    "nvme_core.default_ps_max_latency_us=0" # disables deep sleep since Z87 struggles
-    "pcie_aspm=off" # disables PICe power management 
-    "pci=nommconf" # legacy PCIe bus comms
-  ];
-
-  # ALFA AWUS036ACH Wi-Fi adapter
-#  boot.extraModulePackages = [ config.boot.kernelPackages.rtl8812au ];
-#  boot.kernelModules = [ "8812au" ]; # broken in 25.11 as of 20/03/26
-
-  networking.hostName = "venus";
   networking.networkmanager.enable = true;
   networking.nameservers = [ "1.1.1.1" "8.8.8.8" ];
 
@@ -68,11 +28,11 @@
 
   # ssh
   services.openssh.enable = true;
- 
+
   # shell
   users.defaultUserShell = pkgs.yash;
 
-  # locale  
+  # locale
   time.timeZone = "Europe/Rome";
   i18n.defaultLocale = "en_GB.UTF-8";
   i18n.extraLocales = [ "en_US.UTF-8/UTF-8" "fr_FR.UTF-8/UTF-8" "mt_MT.UTF-8/UTF-8" ];
@@ -88,10 +48,8 @@
     LC_TIME = "en_GB.UTF-8";
   };
 
-  
   users.users.liabri = {
     isNormalUser = true;
-    description = "liam";
     extraGroups = [ "networkmanager" "wheel" ];
     packages = with pkgs; [];
   };
@@ -105,61 +63,44 @@
     zathura		# docs
     zed-editor 		# editor
     thunar 		# file manager
-    fuzzel  		# application launcher 
+    fuzzel  		# application launcher
     mpv 		# video player
     swayimg		# image viewer
     eww 		# widget
     ly 			# display manager
-    firefox		# browser 		
+    firefox		# browser
     webcord 		# discord
     (awww.packages.${pkgs.stdenv.hostPlatform.system}.awww) # wallpaper daemon
- 
+
     # tools
-    unzip		
+    unzip
     xwayland-satellite	# xwayland support
-    brightnessctl	# brightness control
     curl
     wl-clip-persist	# clipboard persists
     wl-clipboard 	# wl-copy and wl-paste
-    ncdu		# filesystem info
+    ncdu		    # filesystem info
     fastfetch		# system info
-    btop		# system monitor
+    btop		    # system monitor
     (pass.withExtensions (exts: [ exts.pass-otp ]))
-    git 		# git
+    git 		    # git
     git-lfs 		# git for big files
-    gnupg 		# gpg keys
+    gnupg 		    # gpg keys
     pinentry-curses	# password prompt
 
     # env
     javaPackages.compiler.temurin-bin.jre-21
 
     # specialised software
-    steam
     gimp
     (stable.legacyPackages.x86_64-linux.freecad)
     prismlauncher
  ];
-
-
-  # vulkan
-  hardware.graphics = { enable = true; enable32Bit = true; };
-  services.xserver.videoDrivers = [ "nvidia" ];
-  hardware.nvidia = {
-    modesetting.enable = true;
-    powerManagement.enable = false; # often causes freezes
-    open = false;
-    nvidiaSettings = true;
-    package = config.boot.kernelPackages.nvidiaPackages.stable;
-  };
-  hardware.cpu.intel.updateMicrocode = true;
-
 
   environment.sessionVariables = {
     WLR_NO_HARDWARE_CURSORS = "1";
     LIBVA_DRIVER_NAME = "nvidia";
     MOZ_ENABLE_WAYLAND = "1";
   };
-
 
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
   nix.settings.auto-optimise-store = true; # deduplication of nix-store
@@ -169,7 +110,7 @@
     description = "Keep 3 gens and GC";
     serviceConfig.Type = "oneshot";
     script = ''
-      ${pkgs.nix}/bin/nix-env --profile /nix/var/nix/profiles/system --delete-generations +3 # clean system profile      
+      ${pkgs.nix}/bin/nix-env --profile /nix/var/nix/profiles/system --delete-generations +3 # clean system profile
       ${pkgs.nix}/bin/nix-env --profile /nix/var/nix/profiles/per-user/liabri/profile --delete-generations +3 #clean liabri profile
       ${pkgs.nix}/bin/nix-collect-garbage # throw out the rubbish
     '';

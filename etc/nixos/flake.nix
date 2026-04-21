@@ -8,10 +8,18 @@
   };
 
   outputs = { self, nixpkgs-stable, nixpkgs-unstable, awww }: {
-    nixosConfigurations.liabri = nixpkgs-unstable.lib.nixosSystem {
-      system = "x86_64-linux";
-      specialArgs = { inherit awww; stable = nixpkgs-stable; };
-      modules = [ ./configuration.nix ];
+    nixosConfigurations = {
+      venus = nixpkgs-unstable.lib.nixosSystem {
+        system = "x86_64-linux";
+        specialArgs = { inherit awww; stable = nixpkgs-stable; };
+        modules = [ ./hosts/venus/configuration.nix ];
+      };
+
+      mercury = nixpkgs-unstable.lib.nixosSystem {
+        system = "x86_64-linux";
+        specialArgs = { inherit awww; stable = nixpkgs-stable; };
+        modules = [ ./hosts/mercury/configuration.nix ];
+      };
     };
   };
 }
