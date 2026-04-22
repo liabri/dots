@@ -4,7 +4,7 @@ workspace "editor"
 workspace "chat"
 
 spawn-at-startup "awww-daemon"
-spawn-at-startup "wl-clip-persist" "--clipboard" "both"
+spawn-at-startup "wl-clip-persist" "--clipboard" "regular"
 spawn-at-startup "exec .~/.config/aww/scripts/randomise_multi.sh '~/.local/share/wallpapers' 10"
 // spawn-at-startup "exec gsettings set org.gnome.desktop.interface icon-theme sage"
 
