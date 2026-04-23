@@ -14,7 +14,6 @@ user_pref("network.http.speculative-parallel-limit", 0);
 user_pref("browser.aboutConfig.showWarning", false);
 user_pref("browser.toolbars.bookmarks.visibility", "never");
 user_pref("browser.startup.page", 3);
-user_pref("font.name.serif.x-western", "monospace"); // maybe find better way to make firefox use monospace for ui
 user_pref("sidebar.revamp", false);
 user_pref("sidebar.visibility", "hide-sidebar");
 user_pref("sidebar.main.tools", "");
@@ -23,6 +22,9 @@ user_pref("browser.sidebar.disabled", true);
 user_pref("layout.css.prefers-color-scheme.content-override", 2);
 user_pref("extensions.activeThemeID", "firefox-compact-dark@mozilla.org"); // firefox dark theme
 user_pref("browser.uiCustomization.state", "{\"placements\":{\"widget-overflow-fixed-list\":[],\"unified-extensions-area\":[\"ublock0_raymondhill_net-browser-action\",\"addon_darkreader_org-browser-action\",\"_53082585-3a43-4ec7-989c-57d0f23b22da_-browser-action\"],\"nav-bar\":[\"back-button\",\"forward-button\",\"stop-reload-button\",\"vertical-spacer\",\"urlbar-container\",\"personal-bookmarks\",\"downloads-button\",\"unified-extensions-button\"],\"toolbar-menubar\":[\"menubar-items\"],\"TabsToolbar\":[\"tabbrowser-tabs\",\"new-tab-button\"],\"vertical-tabs\":[],\"PersonalToolbar\":[\"import-button\"]},\"seen\":[\"developer-button\",\"screenshot-button\",\"ublock0_raymondhill_net-browser-action\",\"addon_darkreader_org-browser-action\",\"_53082585-3a43-4ec7-989c-57d0f23b22da_-browser-action\"],\"dirtyAreaCache\":[\"nav-bar\",\"vertical-tabs\",\"PersonalToolbar\",\"toolbar-menubar\",\"TabsToolbar\",\"unified-extensions-area\"],\"currentVersion\":23,\"newElementCount\":17}");
+
+// enable userChrome.css
+user_pref("toolkit.legacyUserProfileCustomizations.stylesheets", true);
 
 // url bar
 user_pref("browser.urlbar.suggest.engines", false);
