@@ -27,9 +27,10 @@ alias gl="git log --all --decorate --oneline --graph"
 # nix
 alias rebuild="sudo nixos-rebuild switch --flake /etc/nixos#$(hostname)"     # rebuild system permenantly
 alias rebuild-test="sudo nixos-rebuild test --flake /etc/nixos#$(hostname)"  # rebuild system w/o boot entry
-alias nixcon="sudo nano /etc/nixos/hosts/$(hostname)/configuration.nix"                   # edit /etc/nixos/hosts/hostname/configuration.nix
-alias flake="sudo nano /etc/nixos/flake.nix"                            # edit /etc/nixos/flake.nix
-alias src="nix search nixpkgs"                                          # search nixpkgs
+alias nixcon="sudo nano /etc/nixos/hosts/$(hostname)/configuration.nix"      # edit /etc/nixos/hosts/hostname/configuration.nix
+alias comcon="sudo nano /etc/nixos/modules/common.nix"                       # edit /etc/nixos/modules/common.nix
+alias flake="sudo nano /etc/nixos/flake.nix"                                 # edit /etc/nixos/flake.nix
+alias src="nix search nixpkgs"                                               # search nixpkgs
 
 # temporary session profile, reset on reboot via systemd. piggybacking off nix's profile-based pkgs
 export PATH="$HOME/.cache/nix-session/wrappers:$PATH"
