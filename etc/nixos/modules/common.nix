@@ -1,8 +1,10 @@
 { config, pkgs, stable, awww, ... }:
 
 {
-  networking.networkmanager.enable = true;
-  networking.nameservers = [ "1.1.1.1" "8.8.8.8" ];
+ 
+  # ---------------
+  # --- desktop ---
+  # ---------------
 
   # dm
   services.displayManager.ly.enable = true;
@@ -10,11 +12,21 @@
   # compositor (niri)
   services.displayManager.sessionPackages = [ pkgs.niri ];
   systemd.packages = [ pkgs.niri ];
+
+  # portals
+  programs.dconf.enable = true; # required for gnome portal
   xdg.portal = {
     enable = true;
-    extraPortals = [ pkgs.xdg-desktop-portal-gtk ]; # or xdg-desktop-portal-kde
+    extraPortals = [ 
+      pkgs.xdg-desktop-portal-gtk 
+      pkgs.xdg-desktop-portal-gnome
+    ];
+    configPackages = [ pkgs.niri ]; 
   };
-  xdg.portal.configPackages = [ pkgs.niri ];
+
+  # --------------
+  # --- system ---
+  # --------------
 
   # sound
   security.rtkit.enable = true;
@@ -24,6 +36,82 @@
     alsa.support32Bit = true;
     pulse.enable = true;
     jack.enable = true;
+    wireplumber.enable = true;
+  };
+
+  # bluetooth
+  hardware.bluetooth = {
+    enable = true;
+    powerOnBoot = true;
+    settings = {
+      General = {
+        # Shows battery charge of connected devices on supported
+        # Bluetooth adapters. Defaults to 'false'.
+        Experimental = true;
+        # When enabled other devices can connect faster to us, however
+        # the tradeoff is increased power consumption. Defaults to
+        # 'false'.
+        FastConnectable = true;
+      };
+      Policy = {
+        # Enable all controllers when they are found. This includes
+        # adapters present on start as well as adapters that are plugged
+        # in later on. Defaults to 'true'.
+        AutoEnable = true;
+      };
+    };
+  };
+
+  # ------------------
+  # --- networking ---
+  # ------------------
+ 
+  networking.networkmanager.enable = true;
+  networking.nameservers = [ "1.1.1.1" "8.8.8.8" ];
+
+  # -------------
+  # --- users ---
+  # -------------
+
+  users.users.liabri = {
+    isNormalUser = true;
+    extraGroups = [ "networkmanager" "wheel" ];
+    packages = with pkgs; [];
+  };
+
+  # ----------------
+  # --- packages ---
+  # ----------------
+
+  nixpkgs.config.allowUnfree = true;
+  environment.systemPackages = with pkgs; [
+    # basic
+    foot		# terminal
+    niri		# compositor
+    swayimg		# image viewer
+    ly 			# display manager
+    firefox		# browser
+    (awww.packages.${pkgs.stdenv.hostPlatform.system}.awww) # wallpaper daemon
+    pavucontrol
+    bluetui
+
+    # tools
+    curl
+    unzip
+    ncdu
+    wl-clip-persist	# clipboard persists
+    wl-clipboard 	# wl-copy and wl-paste
+    fastfetch		# system info
+    btop		# system monitor
+    brightnessctl 	# brightness control
+ ];
+
+  # -------------------
+  # --- environment ---
+  # -------------------
+  environment.sessionVariables = {
+    WLR_NO_HARDWARE_CURSORS = "1";
+    MOZ_ENABLE_WAYLAND = "1";
   };
 
   # ssh
@@ -48,59 +136,9 @@
     LC_TIME = "en_GB.UTF-8";
   };
 
-  users.users.liabri = {
-    isNormalUser = true;
-    extraGroups = [ "networkmanager" "wheel" ];
-    packages = with pkgs; [];
-  };
-
-  # pkgs
-  nixpkgs.config.allowUnfree = true;
-  environment.systemPackages = with pkgs; [
-    # basic
-    foot		# terminal
-    niri		# compositor
-    zathura		# docs
-    zed-editor 		# editor
-    thunar 		# file manager
-    fuzzel  		# application launcher
-    mpv 		# video player
-    swayimg		# image viewer
-    eww 		# widget
-    ly 			# display manager
-    firefox		# browser
-    webcord 		# discord
-    (awww.packages.${pkgs.stdenv.hostPlatform.system}.awww) # wallpaper daemon
-
-    # tools
-    unzip
-    xwayland-satellite	# xwayland support
-    curl
-    wl-clip-persist	# clipboard persists
-    wl-clipboard 	# wl-copy and wl-paste
-    ncdu		    # filesystem info
-    fastfetch		# system info
-    btop		    # system monitor
-    (pass.withExtensions (exts: [ exts.pass-otp ]))
-    git 		    # git
-    git-lfs 		# git for big files
-    gnupg 		    # gpg keys
-    pinentry-curses	# password prompt
-
-    # env
-    javaPackages.compiler.temurin-bin.jre-21
-
-    # specialised software
-    gimp
-    (stable.legacyPackages.x86_64-linux.freecad)
-    prismlauncher
- ];
-
-  environment.sessionVariables = {
-    WLR_NO_HARDWARE_CURSORS = "1";
-    LIBVA_DRIVER_NAME = "nvidia";
-    MOZ_ENABLE_WAYLAND = "1";
-  };
+  # -----------------
+  # --- nix stuff ---
+  # -----------------
 
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
   nix.settings.auto-optimise-store = true; # deduplication of nix-store
@@ -140,5 +178,4 @@
   # Before changing this value read the documentation for this option
   # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
   system.stateVersion = "25.11"; # Did you read the comment?
-
 }
