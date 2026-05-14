@@ -108,6 +108,9 @@
       fuzzel						# application launcher
       thunar						# file manager
       xfconf
+      transmission_4-gtk
+      stremio-linux-shell
+      steam-run
   ];
 
   programs.thunar.plugins = with pkgs.xfce; [
