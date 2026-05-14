@@ -7,6 +7,11 @@
       ../../modules/common.nix
     ];
 
+  # --------------
+  # --- system ---
+  # --------------
+
+  networking.hostName = "venus";
   boot.loader = {
     efi = {
       canTouchEfiVariables = false;
@@ -37,19 +42,10 @@
     "pci=nommconf" # legacy PCIe bus comms
   ];
 
-  # ALFA AWUS036ACH Wi-Fi adapter
-#  boot.extraModulePackages = [ config.boot.kernelPackages.rtl8812au ];
-#  boot.kernelModules = [ "8812au" ]; # broken in 25.11 as of 20/03/26
-
-  networking.hostName = "venus";
-
-  environment.systemPackages = with pkgs; [
-    steam
- ];
-
   # vulkan
   hardware.graphics = { enable = true; enable32Bit = true; };
   services.xserver.videoDrivers = [ "nvidia" ];
+  hardware.cpu.intel.updateMicrocode = true;
   hardware.nvidia = {
     modesetting.enable = true;
     powerManagement.enable = false; # often causes freezes
@@ -57,5 +53,54 @@
     nvidiaSettings = true;
     package = config.boot.kernelPackages.nvidiaPackages.stable;
   };
-  hardware.cpu.intel.updateMicrocode = true;
+
+  # ALFA AWUS036ACH Wi-Fi adapter
+  #  boot.extraModulePackages = [ config.boot.kernelPackages.rtl8812au ];
+  #  boot.kernelModules = [ "8812au" ]; # broken in 25.11 as of 20/03/26
+
+  # ----------------
+  # --- packages ---
+  # ----------------
+
+  environment.systemPackages = with pkgs; [
+    # tools
+    (pass.withExtensions (exts: [ exts.pass-otp ])) 	# password manager
+    git 						# git
+    git-lfs						# git for big files
+    gnupg						# gpg keys
+    pinentry-curses					# password prompt
+
+    # env
+    xwayland-satellite				        # xwayland support
+    javaPackages.compiler.temurin-bin.jre-21		# java
+
+    # specialised software
+    zed-editor				         	# general editor
+    gimp						# image raster editor
+    (stable.legacyPackages.x86_64-linux.freecad)	# CAD
+    mpv						        # video player
+    eww						        # widgets
+    vesktop						# discord
+    fuzzel						# application launcher
+    thunar						# file manager
+    xfconf                                              # required for thunar
+    transmission_4-gtk                                  # torrent client
+    stremio-linux-shell                                 # stremio
+    steam-run                                           # FHS env for games
+    steam                                               # steam
+    digikam                                             # image sorter
+    ntfs3g						# ntfs support (temp)
+ ];
+
+ programs.thunar.plugins = with pkgs.xfce; [
+   thunar-archive-plugin
+   thunar-volman
+ ];
+
+ # ----------------
+ # --- services ---
+ # ----------------
+
+ services.gvfs.enable = true; # Mount, trash, and other functionalities
+ services.tumbler.enable = true; # Thumbnail support for images
 }

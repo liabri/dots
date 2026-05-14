@@ -1,7 +1,7 @@
 { config, pkgs, stable, awww, ... }:
 
 {
- 
+
   # ---------------
   # --- desktop ---
   # ---------------
@@ -17,11 +17,11 @@
   programs.dconf.enable = true; # required for gnome portal
   xdg.portal = {
     enable = true;
-    extraPortals = [ 
-      pkgs.xdg-desktop-portal-gtk 
+    extraPortals = [
+      pkgs.xdg-desktop-portal-gtk
       pkgs.xdg-desktop-portal-gnome
     ];
-    configPackages = [ pkgs.niri ]; 
+    configPackages = [ pkgs.niri ];
   };
 
   # --------------
@@ -65,7 +65,7 @@
   # ------------------
   # --- networking ---
   # ------------------
- 
+
   networking.networkmanager.enable = true;
   networking.nameservers = [ "1.1.1.1" "8.8.8.8" ];
 
@@ -98,6 +98,7 @@
     # tools
     curl
     unzip
+    p7zip
     ncdu
     wl-clip-persist	# clipboard persists
     wl-clipboard 	# wl-copy and wl-paste
