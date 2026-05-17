@@ -121,25 +121,6 @@
     thunar-volman  
   ];
 
-  programs.nix-ld = {
-    enable = true;
-    libraries = with pkgs; [
-      stdenv.cc.cc.lib
-      zlib
-      fuse3
-      alsa-lib
-      vulkan-loader
-      libGL
-      libX11
-      libXext
-      libXrender
-      libxkbcommon
-      wayland
-      SDL2
-      libpulseaudio
-    ];
-  };
-
   # ---------------
   # --- services ---
   # ----------------
