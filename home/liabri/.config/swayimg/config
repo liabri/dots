@@ -32,13 +32,10 @@ size = 200
 cache = 100
 preload = no
 pstore = no
-fill = yes
 antialiasing = mks13
 window = #00000000
 background = #202020ff
 select = #404040ff
-border = #000000ff
-shadow = #000000ff
 
 [list]
 order = alpha
