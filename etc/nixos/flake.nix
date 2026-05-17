@@ -5,19 +5,20 @@
     nixpkgs-stable.url = "github:NixOS/nixpkgs/nixos-25.11";
     nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
     awww.url = "git+https://codeberg.org/LGFae/awww";
+    pluto.url = "git+file:///home/liabri/loghob";
   };
 
-  outputs = { self, nixpkgs-stable, nixpkgs-unstable, awww }: {
+  outputs = {self, ...}@sources: {
     nixosConfigurations = {
-      venus = nixpkgs-unstable.lib.nixosSystem {
+      venus = sources.nixpkgs-unstable.lib.nixosSystem {
         system = "x86_64-linux";
-        specialArgs = { inherit awww; stable = nixpkgs-stable; };
+        specialArgs = { inherit sources; };
         modules = [ ./hosts/venus/configuration.nix ];
       };
 
-      mercury = nixpkgs-unstable.lib.nixosSystem {
+      mercury = sources.nixpkgs-unstable.lib.nixosSystem {
         system = "x86_64-linux";
-        specialArgs = { inherit awww; stable = nixpkgs-stable; };
+        specialArgs = { inherit sources; };
         modules = [ ./hosts/mercury/configuration.nix ];
       };
     };

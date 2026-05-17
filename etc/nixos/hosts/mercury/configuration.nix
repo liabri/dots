@@ -1,4 +1,4 @@
-{ config, pkgs, stable, ... }:
+{ config, pkgs, sources, ... }:
 
 {
   imports =
@@ -101,7 +101,7 @@
       # specialised software
       zed-editor					# general editor
       gimp						# image raster editor
-      (stable.legacyPackages.x86_64-linux.freecad)	# CAD
+      (sources.nixpkgs-stable.legacyPackages.x86_64-linux.freecad)	# CAD
       mpv						# video player
       eww						# widgets
       vesktop						# discord
@@ -110,13 +110,35 @@
       xfconf
       transmission_4-gtk
       stremio-linux-shell
-      steam-run
+      umu-launcher
+
+      # games
+      (sources.pluto.packages.${pkgs.stdenv.hostPlatform.system}.balatro.override { offlineMode = true; })
   ];
 
   programs.thunar.plugins = with pkgs.xfce; [
     thunar-archive-plugin
     thunar-volman  
   ];
+
+  programs.nix-ld = {
+    enable = true;
+    libraries = with pkgs; [
+      stdenv.cc.cc.lib
+      zlib
+      fuse3
+      alsa-lib
+      vulkan-loader
+      libGL
+      libX11
+      libXext
+      libXrender
+      libxkbcommon
+      wayland
+      SDL2
+      libpulseaudio
+    ];
+  };
 
   # ---------------
   # --- services ---

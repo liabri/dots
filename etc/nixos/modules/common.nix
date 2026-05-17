@@ -1,7 +1,7 @@
-{ config, pkgs, stable, awww, ... }:
+{ config, pkgs, sources, ... }:
 
 {
-
+ 
   # ---------------
   # --- desktop ---
   # ---------------
@@ -17,16 +17,21 @@
   programs.dconf.enable = true; # required for gnome portal
   xdg.portal = {
     enable = true;
-    extraPortals = [
-      pkgs.xdg-desktop-portal-gtk
+    extraPortals = [ 
+      pkgs.xdg-desktop-portal-gtk 
       pkgs.xdg-desktop-portal-gnome
     ];
-    configPackages = [ pkgs.niri ];
+    configPackages = [ pkgs.niri ]; 
   };
 
   # --------------
   # --- system ---
   # --------------
+
+  hardware.graphics = {
+    enable = true;
+    enable32Bit = true;
+  };
 
   # sound
   security.rtkit.enable = true;
@@ -65,7 +70,7 @@
   # ------------------
   # --- networking ---
   # ------------------
-
+ 
   networking.networkmanager.enable = true;
   networking.nameservers = [ "1.1.1.1" "8.8.8.8" ];
 
@@ -91,7 +96,7 @@
     swayimg		# image viewer
     ly 			# display manager
     firefox		# browser
-    (awww.packages.${pkgs.stdenv.hostPlatform.system}.awww) # wallpaper daemon
+    (sources.awww.packages.${pkgs.stdenv.hostPlatform.system}.awww) # wallpaper daemon
     pavucontrol
     bluetui
 
