@@ -20,25 +20,6 @@
   # --- power mangement ---
   # -----------------------
 
-  # enable suspend and hibernation
-  services.logind.settings = {
-    Login = {
-      HandleLidSwitch = "suspend-then-hibernate";
-      
-      # If you used the optional external power toggle earlier, 
-      # it has also been renamed to this:
-      # HandleLidSwitchExternalPower = "suspend";
-    };
-  };
-
-  # hibernate after 15min of suspension
-  systemd.sleep.settings = {
-    Sleep = {
-      HibernateDelaySec = "15m";
-      AllowHybridSleep = false;
-    };
-  };
-
   # cpu control
   powerManagement.enable = true;
   services.tlp = {

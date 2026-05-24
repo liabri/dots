@@ -110,7 +110,35 @@
     fastfetch		# system info
     btop		# system monitor
     brightnessctl 	# brightness control
- ];
+    waylock		# device locker
+    swayidle		# daemon to manage locker
+  ];
+
+  # ----------------
+  # --- services ---
+  # ----------------
+
+  services.gnome.gnome-keyring.enable = true;
+  security.pam.services.ly.enableGnomeKeyring = true;
+
+  # enable suspend and hibernation
+  services.logind.settings = {
+    Login = {
+      HandleLidSwitch = "suspend-then-hibernate";
+
+      # If you used the optional external power toggle earlier, 
+      # it has also been renamed to this:
+      # HandleLidSwitchExternalPower = "suspend";
+    };
+  };
+
+  # hibernate after 15min of suspension
+  systemd.sleep.settings = {
+    Sleep = {
+      HibernateDelaySec = "15m";
+      AllowHybridSleep = false;
+    };
+  };
 
   # -------------------
   # --- environment ---

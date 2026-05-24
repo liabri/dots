@@ -6,6 +6,7 @@ workspace "chat"
 spawn-at-startup "awww-daemon"
 spawn-at-startup "wl-clip-persist" "--clipboard" "regular"
 spawn-at-startup "exec .~/.config/aww/scripts/randomise_multi.sh '~/.local/share/wallpapers' 10"
+spawn-at-startup "swayidle" "-w" "timeout" "900" "waylock --init-color 000000 --input-color 000000 --fail-color 000000" "timeout" "910" "niri msg action power-off-monitors" "before-sleep" "waylock --init-color 000000 --input-color 000000 --fail-color 000000"
 // spawn-at-startup "exec gsettings set org.gnome.desktop.interface icon-theme sage"
 
 prefer-no-csd                                   // no client side decorations
@@ -50,15 +51,8 @@ input {
     focus-follows-mouse max-scroll-amount="95%";
 }
 
-output "DVI-D-1" {
-    mode "1920x1080@144.001"
-    focus-at-startup
-    position x=1920 y=0
-}
-
-output "HDMI-A-1" {
-    mode "1920x1080@60.000"
-    position x=0 y=0
+output "eDP-1" {
+    scale 1.15
 }
 
 layout {
@@ -103,7 +97,8 @@ binds {
     Mod+grave hotkey-overlay-title="open a resource monitor: btop" { spawn "foot" "btop"; }
 
     // misc
-    Mod+L hotkey-overlay-title="Lock the Screen: swaylock" { spawn "swaylock"; }
+    Mod+L hotkey-overlay-title="suspend then hibernate after 15m" { spawn "systemctl" "suspend-then-hibernate"; }
+    Mod+P hotkey-overlay-title="hibernate" { spawn "systemctl" "hibernate"; }
 
     // volume
     XF86AudioRaiseVolume allow-when-locked=true { spawn "wpctl" "set-volume" "@DEFAULT_AUDIO_SINK@" "0.1+"; } // | sed -En 's/.*\[([0-9]+)%\].*/\1/p' | head -1 > $WOBSOCK
@@ -179,13 +174,13 @@ window-rule {
 }
 
 window-rule {
-    match app-id="dev.zed.Zed-Previe"
+    match app-id="dev.zed.Zed-Preview"
     open-maximized true
     open-on-workspace "editor"
 }
 
 window-rule {
-    match app-id="WebCord"
+    match app-id="Vesktop"
     open-maximized true
     open-on-workspace "chat"
 }
