@@ -96,7 +96,7 @@
     swayimg		# image viewer
     ly 			# display manager
     firefox		# browser
-    (sources.awww.packages.${pkgs.stdenv.hostPlatform.system}.awww) # wallpaper daemon
+    awww		# wallpaper daemon
     pavucontrol
     bluetui
 
